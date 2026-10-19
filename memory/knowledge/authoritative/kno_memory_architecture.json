@@ -1,0 +1,37 @@
+{
+  "id": "kno_memory_architecture",
+  "content": "Long-term memory uses Hermes AI bounded Markdown banks and Obsidian cellular wikilinks rather than flat unconstrained dumps.",
+  "type": "project_fact",
+  "category": "authoritative",
+  "status": "verified",
+  "confidence": 0.98,
+  "importance": 0.92,
+  "sources": [
+    "harness/memory.js",
+    "harness/graph.js",
+    "memory/decisions.md"
+  ],
+  "evidence_count": 3,
+  "contradictions": 0,
+  "content_hash": "a04fd69c7c7eef122a7ac7aa1cacd1c857cc4133f8e9e021693f0cc89a3f120c",
+  "created_at": "2026-10-04T09:35:42.145Z",
+  "updated_at": "2026-10-04T09:35:42.145Z",
+  "valid_from": "2026-10-04T09:35:42.145Z",
+  "valid_until": null,
+  "last_verified": "2026-10-04T09:35:42.145Z",
+  "usage_count": 0,
+  "success_count": 0,
+  "failure_count": 0,
+  "superseded_by": null,
+  "supersedes": null,
+  "tags": [
+    "memory",
+    "hermes",
+    "obsidian",
+    "wikilinks"
+  ],
+  "relations": [
+    "[[hermes-memory-system]]",
+    "[[adr-001-obsidian-cellular-graph]]"
+  ]
+}

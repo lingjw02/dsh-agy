@@ -1,0 +1,24 @@
+{
+  "id": "exp_mutmm1i8_nlax",
+  "taskId": "task-test-01",
+  "intent": "Compile native addon",
+  "plan": [],
+  "actions": [],
+  "toolsUsed": [
+    "run_command"
+  ],
+  "errors": [
+    "node-gyp rebuild failed: missing python 3.11"
+  ],
+  "retries": 0,
+  "finalResult": "",
+  "success": false,
+  "userFeedback": null,
+  "timestamp": "2026-10-04T09:36:19.232Z",
+  "lessonsCandidate": {
+    "context": "Compile native addon",
+    "error": "node-gyp rebuild failed: missing python 3.11",
+    "lesson": "When performing \"Compile native addon\", error occurred: \"node-gyp rebuild failed: missing python 3.11\". Pre-check parameters and environment to avoid recurrence.",
+    "actionableRule": "Inspect requirements before invoking run_command"
+  }
+}

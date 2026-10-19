@@ -1,0 +1,31 @@
+{
+  "id": "can_mutmm1i9_d0tf",
+  "content": "When performing \"Compile native addon\", error occurred: \"node-gyp rebuild failed: missing python 3.11\". Pre-check parameters and environment to avoid recurrence.",
+  "type": "lesson_learned",
+  "category": "temporary",
+  "status": "candidate",
+  "confidence": 0.5,
+  "importance": 0.85,
+  "sources": [
+    "task_experience:task-test-01"
+  ],
+  "evidence_count": 1,
+  "contradictions": 0,
+  "content_hash": "a1b020c5d1e4f26b46e53e3adc0515af4d0428b5c17850bda96d9bbd71f22189",
+  "created_at": "2026-10-04T09:36:19.233Z",
+  "updated_at": "2026-10-04T09:36:19.233Z",
+  "valid_from": "2026-10-04T09:36:19.233Z",
+  "valid_until": null,
+  "last_verified": null,
+  "usage_count": 0,
+  "success_count": 0,
+  "failure_count": 0,
+  "superseded_by": null,
+  "supersedes": null,
+  "tags": [
+    "experience",
+    "lesson",
+    "run_command"
+  ],
+  "relations": []
+}

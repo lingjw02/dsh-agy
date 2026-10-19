@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeepSeek Harness (DSH) // Antigravity Agent Workbench</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Marked Markdown Parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Highlight.js Syntax Highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark-dimmed.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300f0ff'><circle cx='12' cy='12' r='8'/></svg>">
+</head>
+<body class="bg-[#030509] text-slate-100 flex flex-col h-screen w-screen overflow-hidden select-none relative">
+
+  <!-- Dynamic Ambient Aurora Lighting (Living Depth Layer) -->
+  <div class="ambient-aurora-container">
+    <div class="ambient-orb ambient-orb-1"></div>
+    <div class="ambient-orb ambient-orb-2"></div>
+    <div class="ambient-orb ambient-orb-3"></div>
+  </div>
+
+  <!-- Floating Toast Notifications -->
+  <div id="toast-container"></div>
+
+  <!-- ================= TOP COMMAND BAR (DeepSeek Cockpit) ================= -->
+  <header class="h-14 glass-cockpit px-4 flex items-center justify-between z-30 flex-shrink-0 relative">
+    <div class="flex items-center space-x-3">
+      <!-- Left Sidebar Collapse Toggle -->
+      <button id="btn-toggle-left-sidebar" class="p-1.5 rounded-lg bg-[#0c1222] hover:bg-[#121c35] border border-white/10 text-gray-400 hover:text-white transition" title="Toggle Workspace Sidebar">
+        <i data-lucide="panel-left" class="w-4 h-4"></i>
+      </button>
+
+      <!-- DeepSeek Holographic Emblem -->
+      <div class="flex items-center space-x-2.5">
+        <div class="w-8 h-8 rounded-lg dsh-emblem-glow flex items-center justify-center shadow-lg shadow-cyan-500/25">
+          <i data-lucide="orbit" class="w-4.5 h-4.5 text-white"></i>
+        </div>
+        <div>
+          <div class="flex items-center space-x-1.5">
+            <span class="font-bold text-xs tracking-wider text-white uppercase">DEEPSEEK HARNESS</span>
+            <span class="text-[9px] px-1.5 py-0.2 rounded bg-cyan-950/80 text-cyan-400 font-mono border border-cyan-500/40">CORDIS v2.5.0</span>
+          </div>
+          <p class="text-[10px] text-gray-400 font-mono -mt-0.5">Antigravity Agent Runtime // Worker Mesh</p>
+        </div>
+      </div>
+
+      <div class="h-5 w-[1px] bg-white/10 mx-1"></div>
+
+      <!-- Workspace Selector Pill -->
+      <div id="workspace-pill" class="flex items-center space-x-2 px-2.5 py-1 rounded-md bg-[#0c1222] border border-white/10 hover:border-cyan-500/50 cursor-pointer transition text-xs font-mono text-gray-300">
+        <i data-lucide="folder-git-2" class="w-3.5 h-3.5 text-cyan-400"></i>
+        <span id="current-workspace-name" class="truncate max-w-[140px]">C:\Users\ling5</span>
+      </div>
+
+      <!-- Google Account & Gemini Link Status Pill -->
+      <div id="account-pill" class="flex items-center space-x-1.5 px-2.5 py-1 rounded-md bg-[#0c1222] border border-cyan-500/30 hover:border-cyan-400/80 cursor-pointer transition text-xs font-mono text-cyan-300" title="Google Account & Gemini Link Status - Click to Configure">
+        <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-cyan-400"></i>
+        <span id="account-email" class="truncate max-w-[140px]">ling55785@gmail.com</span>
+        <span class="text-[9px] px-1 py-0.2 rounded bg-emerald-950/80 text-emerald-400 font-bold border border-emerald-500/40 hidden sm:inline">GEMINI LINKED</span>
+      </div>
+
+      <!-- Model Selector -->
+      <div class="relative">
+        <select id="model-select" class="appearance-none bg-[#0c1222] border border-white/10 text-xs text-gray-200 rounded-md px-3 py-1 pr-7 hover:border-purple-500/40 focus:outline-none focus:border-cyan-400 cursor-pointer font-medium">
+          <option value="Gemini 3.8 Flash (High)">✨ Gemini 3.8 Flash (High)</option>
+          <option value="Gemini 2.5 Flash">⚡ Gemini 2.5 Flash</option>
+          <option value="Gemini 2.5 Pro (Advanced)">🌟 Gemini 2.5 Pro (Advanced)</option>
+          <option value="Gemini 4 Argon (Medium)">🪐 Gemini 4 Argon (Medium)</option>
+          <option value="DeepSeek V3 (671B MoE)">🧠 DeepSeek V3 (671B MoE)</option>
+          <option value="DeepSeek R1 (Reasoning)">🔮 DeepSeek R1 (Reasoning)</option>
+          <option value="Custom Endpoint">🔌 Custom Endpoint (Ollama/vLLM)</option>
+        </select>
+        <i data-lucide="chevron-down" class="w-3 h-3 text-gray-400 absolute right-2.5 top-2 pointer-events-none"></i>
+      </div>
+
+      <!-- Policy Badge -->
+      <div class="relative">
+        <select id="policy-select" title="Antigravity Tool Execution Policy" class="appearance-none bg-[#0c1222] border border-white/10 text-[11px] text-emerald-400 rounded-md px-2.5 py-1 pr-6 hover:border-emerald-500/40 focus:outline-none cursor-pointer font-mono">
+          <option value="always-proceed">🛡️ always-proceed (Auto)</option>
+          <option value="request-review">⚠️ request-review (Review)</option>
+          <option value="proceed-in-sandbox">📦 sandbox-only</option>
+          <option value="strict">🔒 strict (Read-only)</option>
+        </select>
+        <i data-lucide="chevron-down" class="w-3 h-3 text-gray-400 absolute right-2 top-2 pointer-events-none"></i>
+      </div>
+
+      <!-- Passive Guardians Live Strip (Hybrid Mode) -->
+      <div id="guardian-strip" class="hidden xl:flex items-center space-x-1.5 px-2.5 py-1 rounded-md bg-[#090e1c] border border-cyan-500/30 text-[11px] text-gray-300 font-mono shadow-sm cursor-pointer hover:border-cyan-400/60 transition" title="Passive Guardians Active (Hybrid Mode) - Click to view live audit status">
+        <span class="text-cyan-400 font-semibold flex items-center space-x-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>🛡️ Guardians:</span>
+        </span>
+        <span class="text-emerald-300" id="guard-token-status" title="Token-Saver & Truncation Guard">Token-Saver</span>
+        <span class="text-gray-600">|</span>
+        <span class="text-cyan-300" id="guard-taste-status" title="Anti-Slop Design Taste Guard">Design-Taste</span>
+        <span class="text-gray-600">|</span>
+        <span class="text-purple-300" id="guard-superpower-status" title="Antigravity Superpower Guard">Superpower</span>
+      </div>
+    </div>
+
+    <!-- Center/Right Stats & Actions -->
+    <div class="flex items-center space-x-3">
+      <!-- Live DeepSeek Telemetry Strip -->
+      <div class="hidden lg:flex items-center space-x-1.5 text-xs font-mono text-gray-400">
+        <div class="telemetry-pill flex items-center space-x-1.5 text-gray-300" title="Total Tokens Processed">
+          <span class="text-gray-500">Tokens:</span>
+          <span id="metric-tokens" class="text-cyan-400 font-semibold">6,430</span>
+        </div>
+        <div class="telemetry-pill flex items-center space-x-1.5 text-gray-300" title="Estimated API Cost">
+          <span class="text-gray-500">Cost:</span>
+          <span id="metric-cost" class="text-emerald-400 font-semibold">$0.0019</span>
+        </div>
+        <div class="telemetry-pill flex items-center space-x-1.5 text-gray-300" title="Average Model Latency">
+          <span class="text-gray-500">Latency:</span>
+          <span id="metric-latency" class="text-amber-400 font-semibold">420ms</span>
+        </div>
+      </div>
+
+      <!-- WS Connection status -->
+      <div id="ws-indicator" class="flex items-center space-x-1.5 px-2 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-[11px] font-mono text-emerald-400">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-live"></span>
+        <span class="hidden sm:inline">ONLINE</span>
+      </div>
+
+      <div class="h-5 w-[1px] bg-white/10 mx-1"></div>
+
+      <!-- New Session Button -->
+      <button id="btn-new-chat" class="px-2.5 py-1 rounded-md bg-cyan-600/30 hover:bg-cyan-600/50 border border-cyan-500/50 text-cyan-200 text-xs font-medium flex items-center space-x-1.5 transition">
+        <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+        <span>New Session</span>
+      </button>
+
+      <!-- Plugins Manager Button -->
+      <button id="btn-open-plugins" class="px-2.5 py-1 rounded-md bg-[#0c1222] hover:bg-[#121c35] border border-white/10 hover:border-purple-500/40 text-gray-200 text-xs font-medium flex items-center space-x-1.5 transition">
+        <i data-lucide="puzzle" class="w-3.5 h-3.5 text-purple-400"></i>
+        <span>Plugins</span>
+        <span id="plugin-count-badge" class="px-1 py-0.2 rounded bg-purple-900/80 text-[10px] text-purple-300 font-mono">42</span>
+      </button>
+
+      <!-- Obsidian Knowledge Graph Button -->
+      <button id="btn-top-open-graph" class="px-2.5 py-1 rounded-md bg-[#0c1222] hover:bg-[#121c35] border border-white/10 hover:border-cyan-500/40 text-gray-200 text-xs font-medium flex items-center space-x-1.5 transition" title="Open Obsidian Cellular Knowledge Graph">
+        <i data-lucide="network" class="w-3.5 h-3.5 text-cyan-400"></i>
+        <span>Graph</span>
+        <span class="px-1 py-0.2 rounded bg-cyan-950 text-[10px] text-cyan-300 font-mono">11</span>
+      </button>
+
+      <!-- Toggle Right Drawer -->
+      <button id="btn-toggle-drawer" class="p-1.5 rounded-md bg-[#0c1222] hover:bg-[#121c35] border border-white/10 text-gray-300 transition" title="Toggle Auxiliary Workbench Drawer">
+        <i data-lucide="panel-right" class="w-4 h-4"></i>
+      </button>
+
+      <!-- Settings Button -->
+      <button id="btn-open-settings" class="p-1.5 rounded-md bg-[#0c1222] hover:bg-[#121c35] border border-white/10 text-gray-300 transition" title="Harness Settings">
+        <i data-lucide="settings" class="w-4 h-4"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= MAIN WORKBENCH LAYOUT ================= -->
+  <div class="flex flex-1 overflow-hidden relative">
+
+    <!-- ========== LEFT SIDEBAR (Activity Rail & Slots) ========== -->
+    <aside id="left-sidebar" class="w-72 glass-sidebar border-r border-white/10 flex flex-col flex-shrink-0 transition-all duration-200 z-20">
+      <!-- Sidebar Tab Switcher: 6-Column Precision Cockpit Rail -->
+      <div class="grid grid-cols-6 border-b border-white/10 bg-black/30 p-1 gap-0.5">
+        <button data-tab="tab-sessions" class="sidebar-tab active flex flex-col items-center justify-center py-1.5 px-0.5 rounded-lg text-cyan-400" title="Chat & History">
+          <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
+          <span class="text-[9px] font-medium mt-0.5">Chat</span>
+        </button>
+        <button data-tab="tab-files" class="sidebar-tab flex flex-col items-center justify-center py-1.5 px-0.5 rounded-lg text-slate-400 hover:text-slate-200" title="Workspace Files">
+          <i data-lucide="folder" class="w-3.5 h-3.5"></i>
+          <span class="text-[9px] font-medium mt-0.5">Files</span>
+        </button>
+        <button data-tab="tab-subagents" class="sidebar-tab flex flex-col items-center justify-center py-1.5 px-0.5 rounded-lg text-slate-400 hover:text-slate-200" title="Subagent Fleet">
+          <i data-lucide="bot" class="w-3.5 h-3.5"></i>
+          <span class="text-[9px] font-medium mt-0.5">Fleet</span>
+        </button>
+        <button data-tab="tab-tasks" class="sidebar-tab flex flex-col items-center justify-center py-1.5 px-0.5 rounded-lg text-slate-400 hover:text-slate-200" title="Tasks & Timers">
+          <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+          <span class="text-[9px] font-medium mt-0.5">Tasks</span>
+        </button>
+        <button data-tab="tab-plugins" class="sidebar-tab flex flex-col items-center justify-center py-1.5 px-0.5 rounded-lg text-slate-400 hover:text-slate-200" title="Worker Mesh & Plugins">
+          <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+          <span class="text-[9px] font-medium mt-0.5">Modules</span>
+        </button>
+        <button data-tab="tab-graph" class="sidebar-tab flex flex-col items-center justify-center py-1.5 px-0.5 rounded-lg text-slate-400 hover:text-slate-200" title="Obsidian Cellular Graph">
+          <i data-lucide="network" class="w-3.5 h-3.5 text-cyan-400"></i>
+          <span class="text-[9px] font-medium mt-0.5">Graph</span>
+        </button>
+      </div>
+
+      <!-- Tab 1: Sessions & History -->
+      <div id="tab-sessions" class="sidebar-tab-content flex-1 flex flex-col overflow-hidden">
+        <div class="p-2 border-b border-white/5">
+          <input type="text" id="session-search" placeholder="Search sessions & trajectories..." class="w-full bg-[#0c1222] border border-white/10 rounded px-2.5 py-1 text-xs text-gray-300 placeholder-gray-500 focus:outline-none focus:border-cyan-500">
+        </div>
+        <div class="flex-1 overflow-y-auto p-2 space-y-1.5" id="session-list">
+          <div class="p-2.5 rounded-lg bg-[#0c1222] border border-cyan-500/40 cursor-pointer shadow">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-white truncate">Active DeepSeek Session</span>
+              <span class="text-[10px] text-cyan-400 font-mono">LIVE</span>
+            </div>
+            <p class="text-[11px] text-gray-400 truncate mt-1">Cordis Plugin Slot Architecture + Worker Mesh</p>
+          </div>
+        </div>
+        <!-- Past Transcripts Importer -->
+        <div class="p-2 border-t border-white/10 bg-[#04060c]">
+          <button id="btn-import-transcripts" class="w-full py-1.5 rounded bg-[#0c1222] hover:bg-[#121c35] border border-white/10 text-[11px] text-gray-300 flex items-center justify-center space-x-1.5 transition">
+            <i data-lucide="history" class="w-3.5 h-3.5 text-purple-400"></i>
+            <span>Load Brain Transcripts</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab 2: Workspace Explorer -->
+      <div id="tab-files" class="sidebar-tab-content hidden flex-1 flex flex-col overflow-hidden">
+        <div class="p-2 border-b border-white/5 flex items-center justify-between">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-gray-400">Workspace Files</span>
+          <button id="btn-refresh-files" class="text-gray-400 hover:text-white p-1">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-2 font-mono text-xs text-gray-300 space-y-0.5" id="file-tree-container">
+          <div class="text-gray-500 text-xs italic p-2">Loading directory tree...</div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Subagent Fleet Monitor -->
+      <div id="tab-subagents" class="sidebar-tab-content hidden flex-1 flex flex-col overflow-hidden">
+        <div class="p-2 border-b border-white/5 flex items-center justify-between">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-gray-400">Active Subagents</span>
+          <button id="btn-spawn-modal" class="text-xs px-2 py-0.5 rounded bg-purple-900/60 hover:bg-purple-800 text-purple-200 border border-purple-500/40">
+            + Spawn
+          </button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-2 space-y-2" id="subagent-fleet-container">
+          <div class="text-gray-500 text-xs italic p-2">No subagents currently spawned. Use /teamwork-preview or invoke_subagent.</div>
+        </div>
+      </div>
+
+      <!-- Tab 4: Background Tasks & Cron -->
+      <div id="tab-tasks" class="sidebar-tab-content hidden flex-1 flex flex-col overflow-hidden">
+        <div class="p-2 border-b border-white/5 flex items-center justify-between">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-gray-400">Tasks & Timers</span>
+          <button id="btn-refresh-tasks" class="text-gray-400 hover:text-white p-1">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-2 space-y-2" id="tasks-container">
+          <div class="text-gray-500 text-xs italic p-2">No active background tasks or cron schedules.</div>
+        </div>
+      </div>
+
+      <!-- Tab 5: Plugins & MCP Hub -->
+      <div id="tab-plugins" class="sidebar-tab-content hidden flex-1 flex flex-col overflow-hidden">
+        <div class="p-2 border-b border-white/5 flex items-center justify-between">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-gray-400">Worker Mesh & Plugins</span>
+          <span class="text-[10px] text-cyan-400 font-mono">DSH Spec</span>
+        </div>
+        <div class="flex-1 overflow-y-auto p-2 space-y-2" id="plugin-sidebar-list">
+          <div class="text-gray-500 text-xs italic p-2">Scanning modules...</div>
+        </div>
+      </div>
+
+      <!-- Tab 6: Cellular Project Graph -->
+      <div id="tab-graph" class="sidebar-tab-content hidden flex-1 flex flex-col overflow-hidden">
+        <div class="p-2 border-b border-white/5 flex items-center justify-between">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-gray-400">Obsidian Cell Graph</span>
+          <button id="btn-sidebar-open-canvas" class="text-xs px-2 py-0.5 rounded bg-cyan-900/60 hover:bg-cyan-800 text-cyan-200 border border-cyan-500/40 flex items-center space-x-1">
+            <i data-lucide="network" class="w-3 h-3"></i>
+            <span>Open Canvas</span>
+          </button>
+        </div>
+        <div class="p-2 bg-[#04060c] border-b border-white/5 text-[11px] font-mono text-gray-400 space-y-1">
+          <div class="flex justify-between">
+            <span>Project Cells:</span>
+            <span id="sidebar-stat-projects" class="text-cyan-400 font-bold">5</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Memory Cells:</span>
+            <span id="sidebar-stat-memories" class="text-purple-400 font-bold">6</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Inter-Links:</span>
+            <span id="sidebar-stat-links" class="text-emerald-400 font-bold">15</span>
+          </div>
+        </div>
+        <div class="flex-1 overflow-y-auto p-2 space-y-1" id="sidebar-cells-list">
+          <div class="text-gray-500 text-xs italic p-2">Loading cellular graph nodes...</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ========== CENTER: CHAT CANVAS & TRAJECTORY (ConversationRoot) ========== -->
+    <main class="flex-1 flex flex-col dsh-blueprint-bg relative overflow-hidden">
+
+      <!-- Conversation Messages Stream -->
+      <div id="chat-messages" class="flex-1 overflow-y-auto px-4 md:px-8 py-6 space-y-6">
+
+        <!-- DeepSeek Mission Control HUD (Living Cellular Empty State) -->
+        <div id="welcome-hero" class="max-w-4xl mx-auto py-3 space-y-3.5">
+          
+          <!-- Living Header Card with Concentric Orbital Emblem -->
+          <div class="p-5 rounded-2xl glass-card shimmer-sweep border border-cyan-500/30 shadow-2xl relative overflow-hidden">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 relative z-10">
+              <div class="flex items-center space-x-3.5">
+                <div class="orbital-emblem flex-shrink-0">
+                  <div class="orbital-ring"></div>
+                  <i data-lucide="orbit" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                  <div class="flex items-center space-x-2.5">
+                    <h1 class="text-base font-bold text-white tracking-wide uppercase">DeepSeek Harness</h1>
+                    <span class="pulse-badge bg-cyan-950/80 text-cyan-300 border border-cyan-500/40 shadow-sm">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-live"></span>
+                      <span>MESH ACTIVE</span>
+                    </span>
+                  </div>
+                  <p class="text-xs text-slate-400 mt-0.5 leading-relaxed">High-observability agent runtime powered by Cordis slot architecture, Hermes durable memory banks, and Obsidian cellular project graph.</p>
+                </div>
+              </div>
+              <div class="flex items-center space-x-2 font-mono text-[11px] flex-shrink-0">
+                <div class="px-2.5 py-1 rounded-xl bg-black/40 border border-white/10 text-emerald-400 flex items-center space-x-1.5 shadow-sm">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-live"></span>
+                  <span class="font-bold">9 DSH PLUGINS</span>
+                </div>
+                <div class="px-2.5 py-1 rounded-xl bg-black/40 border border-white/10 text-purple-300 font-bold shadow-sm">
+                  <span>22 STAFF</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Obsidian Cellular Mesh Hero Interactive Showcase -->
+            <div class="mt-4 pt-3.5 border-t border-white/10 relative z-10">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3.5">
+                <div class="flex items-center space-x-2">
+                  <i data-lucide="network" class="w-4 h-4 text-cyan-400"></i>
+                  <span class="text-xs font-semibold text-slate-200">Obsidian Cellular Knowledge Network</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 font-mono border border-cyan-500/30">11 Living Cells</span>
+                </div>
+                <button onclick="window.app.openGraphModal()" class="px-3 py-1 rounded-xl bg-cyan-600/30 hover:bg-cyan-600/50 border border-cyan-500/50 text-cyan-200 text-xs font-medium flex items-center space-x-1.5 transition shadow-sm w-fit">
+                  <span>Explore 2D Canvas</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+
+              <!-- Interactive Living Project Cell Pills -->
+              <div class="flex flex-wrap gap-2">
+                <button onclick="window.app.openGraphAndSelect('antigravity-harness')" class="cell-chip-btn">
+                  <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                  <span class="text-cyan-300 font-bold">🪐 Antigravity Harness</span>
+                  <span class="text-[10px] text-slate-500">Primary Cell</span>
+                </button>
+                <button onclick="window.app.openGraphAndSelect('hermes-memory')" class="cell-chip-btn">
+                  <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+                  <span class="text-purple-300 font-bold">⚡ Hermes Memory Engine</span>
+                  <span class="text-[10px] text-slate-500">Layer-1 Bank</span>
+                </button>
+                <button onclick="window.app.openGraphAndSelect('deepseek-specs')" class="cell-chip-btn">
+                  <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                  <span class="text-amber-300 font-bold">🧠 DeepSeek V3 Specs</span>
+                  <span class="text-[10px] text-slate-500">MoE 671B</span>
+                </button>
+                <button onclick="window.app.openGraphAndSelect('adr-001-obsidian-cellular-graph')" class="cell-chip-btn">
+                  <span class="w-2 h-2 rounded-full bg-rose-400"></span>
+                  <span class="text-rose-300 font-bold">📜 ADR-001 Cellular Graph</span>
+                  <span class="text-[10px] text-slate-500">Topology</span>
+                </button>
+                <button onclick="window.app.openGraphAndSelect('dsh-popper-verification')" class="cell-chip-btn">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  <span class="text-emerald-300 font-bold">🔬 Popper Falsification</span>
+                  <span class="text-[10px] text-slate-500">Audit Daemon</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Intent-Driven Workflow Starters (Replaces rigid 4x2 matrix) -->
+          <div class="space-y-4">
+            
+            <!-- Category 1: Knowledge & Memory Architecture -->
+            <div>
+              <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400 mb-2.5 flex items-center space-x-2">
+                <i data-lucide="brain" class="w-3.5 h-3.5 text-purple-400"></i>
+                <span>Hermes Knowledge Bank & Obsidian Topology</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div onclick="window.app.openDrawer('memory')" class="workflow-card">
+                  <div class="w-8 h-8 rounded-xl bg-purple-950/80 border border-purple-500/40 flex items-center justify-center flex-shrink-0 text-purple-300">
+                    <i data-lucide="book-marked" class="w-4 h-4"></i>
+                  </div>
+                  <div class="truncate">
+                    <div class="text-xs font-bold text-slate-200">Hermes Memory Bank</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5 truncate">Durable facts, USER.md & 2500c budget</div>
+                  </div>
+                </div>
+
+                <div onclick="window.app.openGraphModal()" class="workflow-card">
+                  <div class="w-8 h-8 rounded-xl bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center flex-shrink-0 text-cyan-300">
+                    <i data-lucide="network" class="w-4 h-4"></i>
+                  </div>
+                  <div class="truncate">
+                    <div class="text-xs font-bold text-slate-200">Obsidian Cell Graph</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5 truncate">Visual wikilink force-directed mesh</div>
+                  </div>
+                </div>
+
+                <div onclick="if(window.memoryComp) window.memoryComp.curateRecentTurn()" class="workflow-card">
+                  <div class="w-8 h-8 rounded-xl bg-emerald-950/80 border border-emerald-500/40 flex items-center justify-center flex-shrink-0 text-emerald-300">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                  </div>
+                  <div class="truncate">
+                    <div class="text-xs font-bold text-slate-200">Auto-Curate Memory</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5 truncate">Synthesize chat into activeContext.md</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Category 2: Agent Execution & Superpowers -->
+            <div>
+              <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400 mb-2.5 flex items-center space-x-2">
+                <i data-lucide="zap" class="w-3.5 h-3.5 text-cyan-400"></i>
+                <span>Agent Operations & Workflows</span>
+              </div>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                <button onclick="window.app.insertCommand('/plan ')" class="workflow-card">
+                  <div class="w-7 h-7 rounded-lg bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center flex-shrink-0 text-cyan-400">
+                    <span class="text-xs font-mono font-bold">/</span>
+                  </div>
+                  <div class="truncate">
+                    <div class="text-xs font-mono font-bold text-cyan-400">/plan</div>
+                    <div class="text-[10px] text-slate-400 truncate">Architecture Breakdown</div>
+                  </div>
+                </button>
+
+                <button onclick="window.app.insertCommand('/goal ')" class="workflow-card">
+                  <div class="w-7 h-7 rounded-lg bg-purple-950/80 border border-purple-500/40 flex items-center justify-center flex-shrink-0 text-purple-400">
+                    <i data-lucide="target" class="w-3.5 h-3.5"></i>
+                  </div>
+                  <div class="truncate">
+                    <div class="text-xs font-mono font-bold text-purple-400">/goal</div>
+                    <div class="text-[10px] text-slate-400 truncate">Autonomous Run</div>
+                  </div>
+                </button>
+
+                <button onclick="window.app.openModal('modal-plugins')" class="workflow-card">
+                  <div class="w-7 h-7 rounded-lg bg-indigo-950/80 border border-indigo-500/40 flex items-center justify-center flex-shrink-0 text-indigo-400">
+                    <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+                  </div>
+                  <div class="truncate">
+                    <div class="text-xs font-mono font-bold text-indigo-400">/market</div>
+                    <div class="text-[10px] text-slate-400 truncate">DSH Plugin Store</div>
+                  </div>
+                </button>
+
+                <button onclick="window.app.insertCommand('/popper ')" class="workflow-card">
+                  <div class="w-7 h-7 rounded-lg bg-amber-950/80 border border-amber-500/40 flex items-center justify-center flex-shrink-0 text-amber-400">
+                    <i data-lucide="microscope" class="w-3.5 h-3.5"></i>
+                  </div>
+                  <div class="truncate">
+                    <div class="text-xs font-mono font-bold text-amber-400">/popper</div>
+                    <div class="text-[10px] text-slate-400 truncate">Falsification Engine</div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Interactive Ask Question Container -->
+      <div id="ask-question-box" class="hidden px-4 md:px-8 pb-3 max-w-4xl mx-auto w-full">
+        <div class="p-4 rounded-xl bg-gradient-to-r from-[#0c1222] to-[#141029] border border-cyan-500/50 shadow-2xl">
+          <div class="flex items-center space-x-2 text-cyan-400 font-semibold text-sm mb-2">
+            <i data-lucide="help-circle" class="w-4 h-4"></i>
+            <span id="ask-question-title">Clarification Needed</span>
+          </div>
+          <p id="ask-question-text" class="text-xs text-gray-200 mb-3"></p>
+          <div id="ask-question-options" class="space-y-1.5 mb-3"></div>
+          <div class="flex justify-end space-x-2">
+            <button id="btn-submit-question-answer" class="px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-medium transition">
+              Submit Answer
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== BOTTOM INPUT BAR (The Composer) ========== -->
+      <div class="p-4 bg-transparent relative z-20">
+        <div class="max-w-4xl mx-auto relative">
+
+          <!-- Fluid Prompt Suggestions Strip (Instant Inspiration) -->
+          <div class="flex items-center space-x-2 overflow-x-auto pb-2.5 mb-0.5 scrollbar-none select-none">
+            <button onclick="window.app.insertCommand('/plan ')" class="prompt-chip">
+              <span>📐</span><span>/plan Breakdown</span>
+            </button>
+            <button onclick="window.app.openGraphModal()" class="prompt-chip">
+              <span>🕸️</span><span>Obsidian Graph</span>
+            </button>
+            <button onclick="window.app.insertCommand('/market ')" class="prompt-chip">
+              <span>🛍️</span><span>DSH Store</span>
+            </button>
+            <button onclick="window.app.insertCommand('/quota ')" class="prompt-chip">
+              <span>📊</span><span>Tokens & Cost</span>
+            </button>
+            <button onclick="window.app.insertCommand('/popper ')" class="prompt-chip">
+              <span>🔬</span><span>Popper Falsify</span>
+            </button>
+            <button onclick="window.app.insertCommand('/goal ')" class="prompt-chip">
+              <span>🎯</span><span>Autonomous Run</span>
+            </button>
+          </div>
+
+          <!-- Autocomplete Dropdown Menu (for / and @) -->
+          <div id="autocomplete-popup" class="hidden absolute bottom-full mb-2 left-0 w-80 autocomplete-menu z-40">
+            <div id="autocomplete-header" class="px-3.5 py-2 bg-black/40 text-[10px] uppercase tracking-wider text-slate-400 font-bold border-b border-white/10">
+              Suggestions
+            </div>
+            <div id="autocomplete-items" class="overflow-y-auto max-h-56 p-1.5 space-y-0.5"></div>
+          </div>
+
+          <!-- Interactive Front Staff Worker Suggestion Card -->
+          <div id="worker-suggestion-card" class="hidden mb-2.5 p-3 rounded-2xl bg-gradient-to-r from-purple-950/90 via-[#0e162d]/95 to-indigo-950/90 border border-purple-500/40 shadow-2xl backdrop-blur-xl transition">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-3 overflow-hidden">
+                <span id="worker-sug-icon" class="text-2xl flex-shrink-0">🎨</span>
+                <div class="truncate">
+                  <div class="flex items-center space-x-2">
+                    <span id="worker-sug-name" class="text-xs font-bold text-purple-200">Web Image Artist</span>
+                    <span id="worker-sug-confidence" class="text-[10px] px-2 py-0.5 rounded-full bg-purple-500/30 text-purple-300 font-mono font-bold">98% Match</span>
+                    <span class="text-[10px] text-slate-400 font-mono hidden sm:inline">• Active Front Staff</span>
+                  </div>
+                  <p id="worker-sug-rationale" class="text-[11px] text-slate-300 truncate mt-0.5">Matched intent for landing page and visual asset generation</p>
+                </div>
+              </div>
+              <div class="flex items-center space-x-2 flex-shrink-0 ml-2">
+                <button id="btn-launch-worker" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold flex items-center space-x-1.5 shadow-lg shadow-purple-600/30 transition">
+                  <span>🚀</span><span class="hidden sm:inline">Launch with Worker</span><span class="sm:hidden">Launch</span>
+                </button>
+                <div class="relative">
+                  <button id="btn-switch-worker-menu" class="px-2.5 py-1.5 rounded-xl bg-black/40 hover:bg-white/10 border border-white/10 text-slate-200 text-xs font-medium flex items-center space-x-1 transition">
+                    <span>Switch</span>
+                    <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                  </button>
+                  <!-- Worker Switcher Dropdown -->
+                  <div id="worker-switcher-dropdown" class="hidden absolute bottom-full mb-1 right-0 w-64 bg-[#080d1a] border border-purple-500/40 rounded-xl shadow-2xl p-1.5 z-50 max-h-60 overflow-y-auto">
+                    <div class="px-2 py-1 text-[10px] font-bold text-purple-300 uppercase tracking-wider border-b border-white/10">Select Active Front Staff</div>
+                    <div id="worker-switcher-list" class="space-y-0.5 mt-1"></div>
+                  </div>
+                </div>
+                <button id="btn-dismiss-worker-sug" class="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-white/5 transition" title="Dismiss suggestion">✕</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Input Frame (Fluid Cockpit Composer) -->
+          <div class="composer-frame flex flex-col p-3 transition">
+            <!-- Mentions & Context Chips container -->
+            <div id="input-chips-bar" class="flex flex-wrap gap-1.5 pb-1.5 hidden"></div>
+
+            <textarea id="user-input" rows="2" placeholder="Ask DeepSeek Harness, run a command, or type '/' for slash commands, '@' to mention files..." class="w-full bg-transparent text-sm text-slate-100 placeholder-slate-500 resize-none focus:outline-none leading-relaxed font-sans"></textarea>
+
+            <div class="flex items-center justify-between pt-2.5 border-t border-white/5 mt-1">
+              <div class="flex items-center space-x-2 text-xs">
+                <!-- Attach file button -->
+                <button id="btn-attach" class="p-1.5 rounded-lg text-slate-400 hover:text-cyan-400 hover:bg-white/5 transition" title="Attach file context">
+                  <i data-lucide="paperclip" class="w-4 h-4"></i>
+                </button>
+                <button onclick="window.app.insertSlash()" class="px-2.5 py-1 rounded-lg bg-black/40 text-[11px] font-mono text-cyan-400 hover:bg-white/10 border border-white/10" title="Insert slash command">
+                  /
+                </button>
+                <button onclick="window.app.insertMention()" class="px-2.5 py-1 rounded-lg bg-black/40 text-[11px] font-mono text-purple-400 hover:bg-white/10 border border-white/10" title="Mention context">
+                  @
+                </button>
+              </div>
+
+              <div class="flex items-center space-x-3">
+                <span class="text-[10px] text-slate-500 font-mono hidden sm:inline">Ctrl + Enter to send</span>
+                <button id="btn-send" class="btn-primary-neon px-4 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-2 transition">
+                  <span>Send</span>
+                  <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+
+    <!-- ========== RIGHT AUXILIARY DRAWER (Workbench Panels) ========== -->
+    <aside id="right-drawer" class="w-96 glass-drawer border-l border-white/10 hidden xl:flex flex-col flex-shrink-0 z-20 transition-all duration-300">
+      <!-- Drawer Header Tabs: 6-Column Precision Cockpit Grid -->
+      <div class="flex items-center justify-between border-b border-white/10 bg-black/30 p-1">
+        <div class="grid grid-cols-6 gap-0.5 flex-1 mr-1.5">
+          <button data-drawer-tab="drawer-terminal" class="drawer-tab active flex flex-col items-center justify-center py-1 px-0.5 rounded-lg text-cyan-400" title="Local Terminal (PowerShell)">
+            <i data-lucide="terminal" class="w-3.5 h-3.5"></i>
+            <span class="text-[9px] font-medium mt-0.5">Shell</span>
+          </button>
+          <button data-drawer-tab="drawer-artifacts" class="drawer-tab flex flex-col items-center justify-center py-1 px-0.5 rounded-lg text-slate-400 hover:text-slate-200" title="Artifacts & Preview">
+            <i data-lucide="file-code" class="w-3.5 h-3.5"></i>
+            <span class="text-[9px] font-medium mt-0.5">Code</span>
+          </button>
+          <button data-drawer-tab="drawer-memory" class="drawer-tab flex flex-col items-center justify-center py-1 px-0.5 rounded-lg text-slate-400 hover:text-slate-200" title="Hermes AI Memory Bank">
+            <i data-lucide="brain" class="w-3.5 h-3.5 text-purple-400"></i>
+            <span class="text-[9px] font-medium mt-0.5">Memory</span>
+          </button>
+          <button data-drawer-tab="drawer-market" class="drawer-tab flex flex-col items-center justify-center py-1 px-0.5 rounded-lg text-slate-400 hover:text-slate-200" title="DSH Plugin Market">
+            <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+            <span class="text-[9px] font-medium mt-0.5">Market</span>
+          </button>
+          <button data-drawer-tab="drawer-quota" class="drawer-tab flex flex-col items-center justify-center py-1 px-0.5 rounded-lg text-slate-400 hover:text-slate-200" title="Model Telemetry & Quota">
+            <i data-lucide="gauge" class="w-3.5 h-3.5"></i>
+            <span class="text-[9px] font-medium mt-0.5">Quota</span>
+          </button>
+          <button data-drawer-tab="drawer-trajectory" class="drawer-tab flex flex-col items-center justify-center py-1 px-0.5 rounded-lg text-slate-400 hover:text-slate-200" title="JSONL Trajectory Stream">
+            <i data-lucide="git-commit" class="w-3.5 h-3.5"></i>
+            <span class="text-[9px] font-medium mt-0.5">Stream</span>
+          </button>
+        </div>
+        <button id="btn-close-drawer" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-white/5 transition" title="Close Drawer">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Drawer Content 1: Terminal Runner -->
+      <div id="drawer-terminal" class="drawer-tab-content flex-1 flex flex-col overflow-hidden">
+        <div class="p-2 border-b border-white/5 bg-[#04060c] flex items-center justify-between text-xs font-mono text-gray-400">
+          <span class="flex items-center space-x-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span>Local Shell (PowerShell)</span>
+          </span>
+          <button id="btn-clear-terminal" class="hover:text-white text-[11px]">Clear</button>
+        </div>
+        <div id="terminal-output" class="flex-1 terminal-window p-3 overflow-y-auto whitespace-pre-wrap select-text">
+Welcome to DeepSeek Harness Terminal.
+Ready to execute CLI commands in workspace: C:\Users\ling5
+>_
+        </div>
+        <div class="p-2 border-t border-white/10 bg-[#04060c] flex items-center space-x-2">
+          <span class="text-xs font-mono text-cyan-400 font-bold">$</span>
+          <input type="text" id="terminal-input" placeholder="Type shell command..." class="flex-1 bg-transparent text-xs font-mono text-gray-200 focus:outline-none">
+          <button id="btn-terminal-exec" class="px-2 py-1 rounded bg-[#0c1222] hover:bg-[#121c35] text-xs font-mono text-cyan-400 border border-white/10">Run</button>
+        </div>
+      </div>
+
+      <!-- Drawer Content 2: Artifacts & Code Preview -->
+      <div id="drawer-artifacts" class="drawer-tab-content hidden flex-1 flex flex-col overflow-hidden">
+        <div class="p-2 border-b border-white/5 flex items-center justify-between text-xs">
+          <span id="artifact-title" class="font-mono text-gray-300 truncate">No file selected</span>
+          <button id="btn-save-artifact" class="px-2 py-0.5 rounded bg-cyan-600/30 text-cyan-300 hover:bg-cyan-600/50 text-[11px] border border-cyan-500/40 hidden">Save</button>
+        </div>
+        <div id="artifact-preview" class="flex-1 p-3 overflow-y-auto font-mono text-xs text-gray-300 select-text whitespace-pre">
+Select a file from the Explorer or wait for an artifact generation.
+        </div>
+      </div>
+
+      <!-- Drawer Content: AI Knowledge Base & Self-Evolution System -->
+      <div id="drawer-memory" class="drawer-tab-content hidden flex-1 flex flex-col overflow-hidden">
+        <!-- System Header & Telemetry -->
+        <div class="p-2.5 border-b border-white/10 bg-[#04060c] flex flex-col space-y-2 text-xs font-mono">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+              <span class="font-bold text-gray-200 tracking-wide text-xs">Knowledge & Memory Core</span>
+              <span id="memory-status-pill" class="text-[9px] px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-500/40">SELF-EVOLVING</span>
+            </div>
+            <button id="btn-refresh-memory" class="p-1 rounded text-gray-400 hover:text-white hover:bg-white/5 transition" title="Refresh Knowledge & Memory">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+
+          <!-- 4-Mode Subtab Switcher -->
+          <div class="grid grid-cols-4 gap-1 p-0.5 rounded-lg bg-[#070c1a] border border-white/5 text-[10px]">
+            <button data-memory-subtab="hermes" class="memory-subtab-btn active px-1.5 py-1 rounded text-cyan-300 bg-cyan-600/30 border border-cyan-500/40 font-semibold text-center transition">
+              Hermes Bank
+            </button>
+            <button data-memory-subtab="knowledge" class="memory-subtab-btn px-1.5 py-1 rounded text-gray-400 hover:text-gray-200 text-center transition">
+              Knowledge
+            </button>
+            <button data-memory-subtab="evolution" class="memory-subtab-btn px-1.5 py-1 rounded text-gray-400 hover:text-gray-200 text-center transition">
+              Evolution
+            </button>
+            <button data-memory-subtab="experience" class="memory-subtab-btn px-1.5 py-1 rounded text-gray-400 hover:text-gray-200 text-center transition">
+              Experience
+            </button>
+          </div>
+        </div>
+
+        <!-- ================= SUBTAB 1: HERMES BANK ================= -->
+        <div id="subtab-view-hermes" class="memory-subtab-view flex-1 flex flex-col overflow-hidden">
+          <!-- File Switcher Tabs -->
+          <div class="p-1.5 border-b border-white/5 bg-[#060913] flex items-center space-x-1 overflow-x-auto text-[11px] font-mono">
+            <button data-file="MEMORY.md" class="memory-file-pill active px-2 py-0.5 rounded bg-cyan-600/30 text-cyan-300 border border-cyan-500/50 flex items-center space-x-1">
+              <span>MEMORY.md</span>
+              <span class="pill-badge text-[9px] px-1 rounded bg-black/40 text-gray-400">...</span>
+            </button>
+            <button data-file="USER.md" class="memory-file-pill px-2 py-0.5 rounded bg-[#0c1222] text-gray-400 border border-white/10 hover:border-cyan-500/40 flex items-center space-x-1">
+              <span>USER.md</span>
+              <span class="pill-badge text-[9px] px-1 rounded bg-black/40 text-gray-400">...</span>
+            </button>
+            <button data-file="activeContext.md" class="memory-file-pill px-2 py-0.5 rounded bg-[#0c1222] text-gray-400 border border-white/10 hover:border-cyan-500/40 flex items-center space-x-1">
+              <span>activeContext.md</span>
+              <span class="pill-badge text-[9px] px-1 rounded bg-black/40 text-gray-400">...</span>
+            </button>
+            <button data-file="decisions.md" class="memory-file-pill px-2 py-0.5 rounded bg-[#0c1222] text-gray-400 border border-white/10 hover:border-cyan-500/40 flex items-center space-x-1">
+              <span>decisions.md</span>
+              <span class="pill-badge text-[9px] px-1 rounded bg-black/40 text-gray-400">...</span>
+            </button>
+          </div>
+
+          <!-- Bounded Budget Meter -->
+          <div class="px-2.5 py-1.5 border-b border-white/5 bg-[#080d1a] flex flex-col space-y-1 text-[11px] font-mono">
+            <div class="flex items-center justify-between text-gray-400 text-[10px]">
+              <span class="flex items-center space-x-1">
+                <span>Bounded Budget:</span>
+                <span id="memory-char-count" class="text-cyan-300 font-bold">1,475</span>
+                <span>/</span>
+                <span id="memory-budget-limit" class="text-gray-300">2,500</span>
+                <span>chars</span>
+              </span>
+              <span id="memory-budget-percent" class="text-emerald-400 font-semibold">59%</span>
+            </div>
+            <div class="w-full h-1 bg-gray-800 rounded-full overflow-hidden">
+              <div id="memory-budget-bar" class="h-full bg-cyan-400 w-[59%] transition-all duration-300"></div>
+            </div>
+          </div>
+
+          <!-- Search Bar -->
+          <div class="p-1.5 border-b border-white/5 bg-[#04060c]">
+            <input type="text" id="memory-search-input" placeholder="Search memory bank (keywords, tags, ADRs)..." class="w-full bg-[#0c1222] border border-white/10 rounded px-2.5 py-1 text-xs text-gray-300 placeholder-gray-500 focus:outline-none focus:border-cyan-500">
+          </div>
+
+          <!-- Live Editor -->
+          <div class="flex-1 flex flex-col overflow-hidden relative">
+            <textarea id="memory-editor" class="flex-1 p-3 bg-[#060913] text-gray-200 font-mono text-xs focus:outline-none resize-none leading-relaxed select-text" spellcheck="false" placeholder="Loading memory..."></textarea>
+            <div class="p-2 border-t border-white/10 bg-[#04060c] flex items-center justify-between">
+              <span class="text-[10px] text-gray-500 font-mono">Hermes Markdown • Auto-injected to Snapshot</span>
+              <button id="btn-save-memory" class="px-3 py-1 rounded-md bg-cyan-600/40 hover:bg-cyan-600 text-cyan-200 text-xs font-semibold border border-cyan-500/50 shadow transition flex items-center space-x-1">
+                <span>Save Memory File</span>
+              </button>
+            </div>
+            <div id="memory-search-results" class="hidden absolute inset-0 bg-[#060913] overflow-y-auto p-2 space-y-2 z-10"></div>
+          </div>
+        </div>
+
+        <!-- ================= SUBTAB 2: KNOWLEDGE VAULT ================= -->
+        <div id="subtab-view-knowledge" class="memory-subtab-view hidden flex-1 flex flex-col overflow-hidden">
+          <!-- Taxonomy Filter Chips -->
+          <div class="p-1.5 border-b border-white/5 bg-[#060913] flex items-center space-x-1 overflow-x-auto text-[10px] font-mono">
+            <button data-taxonomy="all" class="knowledge-tax-chip active px-2 py-0.5 rounded bg-cyan-600/30 text-cyan-300 border border-cyan-500/40">All</button>
+            <button data-taxonomy="authoritative" class="knowledge-tax-chip px-2 py-0.5 rounded bg-[#0c1222] text-gray-400 border border-white/10 hover:text-white">🏛️ Auth</button>
+            <button data-taxonomy="learned" class="knowledge-tax-chip px-2 py-0.5 rounded bg-[#0c1222] text-gray-400 border border-white/10 hover:text-white">💡 Learned</button>
+            <button data-taxonomy="experience" class="knowledge-tax-chip px-2 py-0.5 rounded bg-[#0c1222] text-gray-400 border border-white/10 hover:text-white">⚡ Exp</button>
+            <button data-taxonomy="user" class="knowledge-tax-chip px-2 py-0.5 rounded bg-[#0c1222] text-gray-400 border border-white/10 hover:text-white">👤 User</button>
+            <button data-taxonomy="temporary" class="knowledge-tax-chip px-2 py-0.5 rounded bg-[#0c1222] text-yellow-400 border border-yellow-500/30 hover:text-yellow-200">⏳ Candidate</button>
+            <button data-taxonomy="rejected" class="knowledge-tax-chip px-2 py-0.5 rounded bg-[#0c1222] text-rose-400 border border-rose-500/30 hover:text-rose-200">🚫 Rejected</button>
+          </div>
+
+          <!-- Search & Propose Bar -->
+          <div class="p-2 border-b border-white/5 bg-[#04060c] flex items-center space-x-2">
+            <input type="text" id="knowledge-search-input" placeholder="Search verified facts & evidence..." class="flex-1 bg-[#0c1222] border border-white/10 rounded px-2.5 py-1 text-xs text-gray-300 placeholder-gray-500 focus:outline-none focus:border-cyan-500">
+            <button id="btn-propose-candidate" class="px-2 py-1 rounded bg-cyan-900/60 hover:bg-cyan-800 text-cyan-200 border border-cyan-500/40 text-[10px] font-mono flex items-center space-x-1" title="Propose candidate knowledge with evidence">
+              <i data-lucide="plus" class="w-3 h-3"></i>
+              <span>Propose</span>
+            </button>
+          </div>
+
+          <!-- Knowledge Cards Stream -->
+          <div id="knowledge-items-list" class="flex-1 overflow-y-auto p-2.5 space-y-2 font-mono text-xs select-text">
+            <div class="text-gray-500 text-xs italic p-3 text-center">Loading knowledge vault...</div>
+          </div>
+        </div>
+
+        <!-- ================= SUBTAB 3: EVOLUTION LOOP ================= -->
+        <div id="subtab-view-evolution" class="memory-subtab-view hidden flex-1 flex flex-col overflow-hidden">
+          <!-- Token Budget Telemetry Card -->
+          <div class="p-2.5 border-b border-white/10 bg-[#060913] font-mono text-[11px] space-y-2">
+            <div class="flex items-center justify-between text-gray-300">
+              <span class="flex items-center space-x-1.5 font-bold">
+                <i data-lucide="gauge" class="w-3.5 h-3.5 text-cyan-400"></i>
+                <span>Token Budget Manager</span>
+              </span>
+              <span id="evo-token-spent-badge" class="px-1.5 py-0.5 rounded bg-black/40 border border-white/10 text-cyan-300 text-[10px]">0 / 200,000</span>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-1.5 text-[9px] pt-1">
+              <div class="p-1.5 rounded bg-black/30 border border-white/5 flex flex-col">
+                <span class="text-gray-400">Tasks (70%)</span>
+                <span id="evo-alloc-task" class="text-cyan-300 font-bold mt-0.5">0 / 140k</span>
+              </div>
+              <div class="p-1.5 rounded bg-black/30 border border-white/5 flex flex-col">
+                <span class="text-gray-400">Idle (20%)</span>
+                <span id="evo-alloc-idle" class="text-purple-300 font-bold mt-0.5">0 / 40k</span>
+              </div>
+              <div class="p-1.5 rounded bg-black/30 border border-white/5 flex flex-col">
+                <span class="text-gray-400">Audit (10%)</span>
+                <span id="evo-alloc-audit" class="text-emerald-300 font-bold mt-0.5">0 / 20k</span>
+              </div>
+            </div>
+
+            <div class="flex items-center space-x-1.5 pt-1">
+              <button id="btn-run-deep-audit" class="flex-1 py-1 rounded bg-purple-950/70 hover:bg-purple-900 border border-purple-500/40 text-purple-200 text-[10px] font-semibold flex items-center justify-center space-x-1 transition shadow-sm">
+                <i data-lucide="search" class="w-3 h-3 text-purple-400"></i>
+                <span>Deep Audit Sweep</span>
+              </button>
+              <button id="btn-run-idle-step" class="flex-1 py-1 rounded bg-cyan-950/70 hover:bg-cyan-900 border border-cyan-500/40 text-cyan-200 text-[10px] font-semibold flex items-center justify-center space-x-1 transition shadow-sm">
+                <i data-lucide="play" class="w-3 h-3 text-cyan-400"></i>
+                <span>Run Idle Step</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Priority Evolution Queue -->
+          <div class="p-2 border-b border-white/5 bg-[#04060c] flex items-center justify-between text-[11px] font-mono text-gray-400">
+            <span class="font-bold text-gray-200 flex items-center space-x-1.5">
+              <i data-lucide="layers" class="w-3.5 h-3.5 text-yellow-400"></i>
+              <span>Priority Evolution Queue</span>
+            </span>
+            <span id="evo-queue-count" class="text-yellow-400 font-bold">0 items</span>
+          </div>
+
+          <div id="evolution-queue-list" class="flex-1 overflow-y-auto p-2.5 space-y-2 font-mono text-xs select-text">
+            <div class="text-gray-500 text-xs italic p-3 text-center">Queue is empty.</div>
+          </div>
+        </div>
+
+        <!-- ================= SUBTAB 4: EXPERIENCE BANK ================= -->
+        <div id="subtab-view-experience" class="memory-subtab-view hidden flex-1 flex flex-col overflow-hidden">
+          <div class="p-2 border-b border-white/5 bg-[#04060c] flex items-center justify-between text-[11px] font-mono text-gray-400">
+            <span class="font-bold text-gray-200 flex items-center space-x-1.5">
+              <i data-lucide="zap" class="w-3.5 h-3.5 text-emerald-400"></i>
+              <span>Task Retrospectives & Lessons</span>
+            </span>
+            <button id="btn-refresh-experience" class="text-[10px] text-cyan-400 hover:text-cyan-300">Refresh</button>
+          </div>
+
+          <div id="experience-items-list" class="flex-1 overflow-y-auto p-2.5 space-y-2 font-mono text-xs select-text">
+            <div class="text-gray-500 text-xs italic p-3 text-center">No task experiences logged yet.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Drawer Content 3: Plugin Market Explorer -->
+      <div id="drawer-market" class="drawer-tab-content hidden flex-1 flex flex-col overflow-hidden">
+        <div class="p-2 border-b border-white/5 flex items-center justify-between text-xs">
+          <span class="font-mono text-cyan-300 font-semibold">DSH Plugin Market</span>
+          <span class="text-[10px] text-gray-500 font-mono">10 Curated</span>
+        </div>
+        <div class="p-2 border-b border-white/5">
+          <input type="text" id="drawer-market-search" placeholder="Filter marketplace plugins..." class="w-full bg-[#0c1222] border border-white/10 rounded px-2 py-1 text-xs text-gray-300 placeholder-gray-500 focus:outline-none focus:border-cyan-500">
+        </div>
+        <div id="drawer-market-list" class="flex-1 overflow-y-auto p-2 space-y-2">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+
+      <!-- Drawer Content 4: Telemetry & Quota Gauges -->
+      <div id="drawer-quota" class="drawer-tab-content hidden flex-1 flex flex-col overflow-hidden p-3 space-y-3 font-mono">
+        <!-- Google Account & Gemini Integration Card -->
+        <div class="p-3 rounded-xl bg-[#091124] border border-cyan-500/40 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <div class="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400">
+                <i data-lucide="sparkles" class="w-3 h-3"></i>
+              </div>
+              <span class="text-xs font-bold text-white uppercase tracking-wider">Gemini & Google Link</span>
+            </div>
+            <span id="drawer-account-badge" class="px-1.5 py-0.5 rounded bg-emerald-950/80 text-[10px] text-emerald-400 font-bold border border-emerald-500/40">ONLINE</span>
+          </div>
+
+          <div class="text-[11px] space-y-1">
+            <div class="flex justify-between text-gray-400">
+              <span>Google Account:</span>
+              <span id="drawer-account-email" class="text-cyan-300 font-semibold truncate max-w-[150px]">ling55785@gmail.com</span>
+            </div>
+            <div class="flex justify-between text-gray-400">
+              <span>Auth Protocol:</span>
+              <span id="drawer-account-auth" class="text-gray-300">OAuth Personal</span>
+            </div>
+            <div class="flex justify-between text-gray-400">
+              <span>Antigravity Suite:</span>
+              <span class="text-emerald-400">Active / Connected</span>
+            </div>
+            <div class="flex justify-between text-gray-400">
+              <span>Active Model:</span>
+              <span id="drawer-active-model" class="text-purple-300 font-semibold">Gemini 3.8 Flash (High)</span>
+            </div>
+          </div>
+
+          <div class="pt-1 border-t border-white/5 flex items-center justify-between">
+            <button onclick="window.app.openModal('modal-settings')" class="w-full py-1.5 px-2 rounded-lg bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-500/40 text-cyan-300 text-[11px] font-medium flex items-center justify-center space-x-1.5 transition">
+              <i data-lucide="key" class="w-3 h-3"></i>
+              <span>Configure Gemini API Key</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Model Telemetry Gauges -->
+        <div class="p-3 rounded-xl bg-[#080d1a] border border-cyan-500/30 space-y-2">
+          <div class="text-xs font-bold text-white uppercase tracking-wider flex items-center justify-between">
+            <span>Model Telemetry</span>
+            <span class="text-emerald-400 text-[10px]">HEALTHY</span>
+          </div>
+          <div class="flex items-center justify-between text-xs text-gray-400">
+            <span>Total Tokens</span>
+            <span class="text-cyan-300 font-bold" id="drawer-quota-tokens">6,430</span>
+          </div>
+          <div class="flex items-center justify-between text-xs text-gray-400">
+            <span>Prompt / Completion</span>
+            <span class="text-gray-300" id="drawer-quota-prompt-comp">4,280 / 2,150</span>
+          </div>
+          <div class="flex items-center justify-between text-xs text-gray-400">
+            <span>Estimated Cost</span>
+            <span class="text-emerald-400 font-bold" id="drawer-quota-cost">$0.0019 USD</span>
+          </div>
+          <div class="flex items-center justify-between text-xs text-gray-400">
+            <span>Avg Response Latency</span>
+            <span class="text-amber-400 font-bold" id="drawer-quota-latency">420 ms</span>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-xl bg-[#080d1a] border border-white/10 space-y-2">
+          <div class="text-xs font-bold text-white uppercase tracking-wider">Rate Limit Gauges</div>
+          <div class="space-y-1">
+            <div class="flex justify-between text-[11px] text-gray-400">
+              <span>RPM (Requests/min)</span>
+              <span id="drawer-quota-rpm-text">12 / 120 (10%)</span>
+            </div>
+            <div class="w-full h-1.5 bg-gray-800 rounded-full overflow-hidden">
+              <div id="drawer-quota-rpm-bar" class="h-full bg-cyan-400 w-[10%]"></div>
+            </div>
+          </div>
+          <div class="space-y-1 pt-1">
+            <div class="flex justify-between text-[11px] text-gray-400">
+              <span>TPM (Tokens/min)</span>
+              <span id="drawer-quota-tpm-text">24.5k / 1.0M (2.4%)</span>
+            </div>
+            <div class="w-full h-1.5 bg-gray-800 rounded-full overflow-hidden">
+              <div id="drawer-quota-tpm-bar" class="h-full bg-purple-400 w-[2.4%]"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-xl bg-[#080d1a] border border-white/10 text-xs text-gray-400 space-y-1">
+          <div class="text-white font-semibold">Active Tracked Models</div>
+          <div class="text-[11px] text-cyan-300">• Gemini 3.8 Flash (High)</div>
+          <div class="text-[11px] text-cyan-300">• Gemini 2.5 Flash / Pro</div>
+          <div class="text-[11px] text-cyan-300">• Gemini 4 Argon (Medium)</div>
+          <div class="text-[11px] text-purple-300">• DeepSeek V3 (671B MoE)</div>
+          <div class="text-[11px] text-emerald-300">• DeepSeek R1 (Reasoning)</div>
+        </div>
+      </div>
+
+      <!-- Drawer Content 5: Trajectory Stream Inspector -->
+      <div id="drawer-trajectory" class="drawer-tab-content hidden flex-1 flex flex-col overflow-hidden">
+        <div class="p-2 border-b border-white/5 flex items-center justify-between text-xs">
+          <span class="text-gray-400 font-semibold uppercase tracking-wider text-[11px]">JSONL Event Stream</span>
+          <button id="btn-export-trajectory" class="text-xs text-cyan-400 hover:underline">Export</button>
+        </div>
+        <div id="trajectory-log" class="flex-1 p-2 space-y-2 overflow-y-auto font-mono text-[11px] text-gray-400 select-text">
+          <div class="text-gray-500 italic p-2">Trajectory stream initialized. Ready for events.</div>
+        </div>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- Obsidian Cellular Knowledge Graph Studio Modal -->
+  <div id="modal-graph" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-3 md:p-6">
+    <div class="bg-[#050811] border border-cyan-500/40 rounded-2xl w-full h-full max-w-6xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden relative">
+      <!-- Graph Studio Header -->
+      <div class="p-3 border-b border-white/10 flex items-center justify-between bg-[#04060c] flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/25">
+            <i data-lucide="network" class="w-4.5 h-4.5"></i>
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <h2 class="text-sm font-bold text-white tracking-wide uppercase">Obsidian Cellular Knowledge Graph</h2>
+              <span class="text-[9px] px-1.5 py-0.2 rounded bg-cyan-950 text-cyan-400 font-mono border border-cyan-500/40">PROJECT MESH</span>
+            </div>
+            <p class="text-[10px] text-gray-400 font-mono">Reified Markdown Knowledge Cells & [[Wikilink]] Topology</p>
+          </div>
+        </div>
+
+        <!-- Filter & Search Controls -->
+        <div class="flex items-center space-x-2">
+          <!-- Filter pills -->
+          <div class="hidden md:flex items-center space-x-1 bg-[#090e1c] p-1 rounded-lg border border-white/10 text-xs font-mono">
+            <button data-filter="all" class="graph-filter-pill active px-2 py-0.5 rounded bg-cyan-600/30 text-cyan-300 border border-cyan-500/50">All</button>
+            <button data-filter="project" class="graph-filter-pill px-2 py-0.5 rounded text-gray-400 hover:text-gray-200">Projects (Cells)</button>
+            <button data-filter="memory" class="graph-filter-pill px-2 py-0.5 rounded text-gray-400 hover:text-gray-200">Memories</button>
+          </div>
+
+          <!-- Search input -->
+          <input type="text" id="graph-search-input" placeholder="Search cells, tags..." class="bg-[#090e1c] border border-white/10 rounded-lg px-2.5 py-1 text-xs text-gray-200 placeholder-gray-500 focus:outline-none focus:border-cyan-400 w-36 md:w-48 font-mono">
+
+          <!-- Center View -->
+          <button id="btn-graph-center" class="px-2 py-1 rounded-lg bg-[#090e1c] hover:bg-[#121c35] border border-white/10 text-gray-300 text-xs font-mono" title="Center graph viewport">
+            <span>Center</span>
+          </button>
+
+          <!-- New Project Cell -->
+          <button id="btn-graph-new-cell" class="px-2.5 py-1 rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white text-xs font-semibold flex items-center space-x-1 shadow transition">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            <span>New Cell</span>
+          </button>
+
+          <!-- Close Modal -->
+          <button onclick="window.app.closeModal('modal-graph')" class="text-gray-400 hover:text-white p-1 rounded hover:bg-white/5 transition">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Graph Studio Canvas & Overlay -->
+      <div class="flex-1 relative overflow-hidden bg-[#03050a]">
+        <!-- High-DPI HTML5 Canvas for Obsidian Graph -->
+        <canvas id="obsidian-graph-canvas" class="w-full h-full block select-none"></canvas>
+
+        <!-- Floating Stats HUD -->
+        <div class="absolute bottom-3 left-3 bg-[#060913]/90 border border-white/10 rounded-xl px-3 py-1.5 flex items-center space-x-4 text-[11px] font-mono shadow-xl backdrop-blur-md pointer-events-none">
+          <div><span class="text-gray-500">Project Cells:</span> <span id="graph-stat-projects" class="text-cyan-400 font-bold">5</span></div>
+          <div><span class="text-gray-500">Memory Cells:</span> <span id="graph-stat-memories" class="text-purple-400 font-bold">6</span></div>
+          <div><span class="text-gray-500">Links:</span> <span id="graph-stat-links" class="text-emerald-400 font-bold">15</span></div>
+          <div class="text-gray-500 text-[10px]">Scroll to Zoom • Drag to Pan / Reposition</div>
+        </div>
+
+        <!-- Floating Cell Inspector Panel -->
+        <div id="cell-inspector-panel" class="hidden absolute top-3 right-3 w-96 max-h-[85%] bg-[#080d1a]/95 border border-cyan-500/40 rounded-2xl shadow-2xl flex flex-col overflow-hidden backdrop-blur-xl z-20">
+          <div class="p-3 border-b border-white/10 bg-[#04060c] flex items-center justify-between">
+            <div class="truncate mr-2">
+              <span id="inspector-cell-badge" class="text-[10px] px-2 py-0.5 rounded font-mono font-bold bg-cyan-950 text-cyan-300 border border-cyan-500/40">🪐 PROJECT CELL</span>
+              <h3 id="inspector-cell-title" class="text-xs font-bold text-white truncate mt-1">Antigravity Harness</h3>
+            </div>
+            <button id="btn-close-cell-inspector" class="text-gray-400 hover:text-white p-1">
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <div class="p-3 overflow-y-auto space-y-3 flex-1 text-xs">
+            <!-- Tags -->
+            <div>
+              <span class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold block mb-1">Tags</span>
+              <div id="inspector-cell-tags" class="flex flex-wrap gap-1"></div>
+            </div>
+
+            <!-- Outgoing Links -->
+            <div>
+              <span class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold block mb-1">Outgoing Links ([[wikilinks]])</span>
+              <div id="inspector-cell-links" class="flex flex-wrap gap-1.5"></div>
+            </div>
+
+            <!-- Backlinks -->
+            <div>
+              <span class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold block mb-1">Backlinks (Referenced By)</span>
+              <div id="inspector-cell-backlinks" class="flex flex-wrap gap-1.5"></div>
+            </div>
+
+            <!-- Raw Markdown Editor -->
+            <div class="flex-1 flex flex-col space-y-1">
+              <span class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold block">Obsidian Markdown</span>
+              <textarea id="inspector-cell-editor" class="w-full h-44 bg-[#05070e] border border-white/10 rounded-lg p-2 font-mono text-[11px] text-gray-200 resize-none focus:outline-none focus:border-cyan-400 leading-relaxed"></textarea>
+            </div>
+          </div>
+
+          <div class="p-2.5 border-t border-white/10 bg-[#04060c] flex items-center justify-between">
+            <span class="text-[10px] text-gray-500 font-mono">Updates memory/ files directly</span>
+            <button id="btn-save-inspector-cell" class="px-3 py-1 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold shadow transition">
+              Save Cell
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Plugins & Worker Manager Modal -->
+  <div id="modal-plugins" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="bg-[#080d1a] border border-cyan-500/30 rounded-2xl w-full max-w-4xl max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="p-4 border-b border-white/10 flex items-center justify-between bg-[#04060c]">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-cyan-600 to-purple-600 flex items-center justify-center text-white">
+            <i data-lucide="cpu" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h2 class="text-sm font-bold text-white">Antigravity Worker Mesh & Plugin Console</h2>
+            <p class="text-[11px] text-gray-400 font-mono">DeepSeek Harness (DSH) Modular Extensibility Engine</p>
+          </div>
+        </div>
+        <button onclick="window.app.closeModal('modal-plugins')" class="text-gray-400 hover:text-white p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="p-4 flex-1 overflow-y-auto" id="plugin-modal-list">
+        <!-- Rendered dynamically by plugins.js -->
+      </div>
+      <div class="p-3 border-t border-white/10 bg-[#04060c] flex justify-end">
+        <button onclick="window.app.closeModal('modal-plugins')" class="px-4 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="modal-settings" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="bg-[#080d1a] border border-cyan-500/30 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden">
+      <div class="p-4 border-b border-white/10 flex items-center justify-between bg-[#04060c]">
+        <div class="flex items-center space-x-2">
+          <i data-lucide="settings" class="w-4 h-4 text-cyan-400"></i>
+          <h2 class="text-sm font-bold text-white">Harness & Gemini Settings</h2>
+        </div>
+        <button onclick="window.app.closeModal('modal-settings')" class="text-gray-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-4 space-y-4 text-xs max-h-[75vh] overflow-y-auto">
+        <!-- Google Account & Antigravity Suite Box -->
+        <div class="p-3 rounded-xl bg-[#091124] border border-cyan-500/40 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-white uppercase tracking-wider flex items-center space-x-1.5">
+              <i data-lucide="user-check" class="w-3.5 h-3.5 text-cyan-400"></i>
+              <span>Google Account Connection</span>
+            </span>
+            <span class="px-1.5 py-0.5 rounded bg-emerald-950/80 text-[10px] text-emerald-400 font-bold border border-emerald-500/40">CONNECTED</span>
+          </div>
+          <div class="text-[11px] space-y-1 text-gray-300">
+            <div class="flex justify-between">
+              <span class="text-gray-400">Account:</span>
+              <span id="settings-account-email" class="font-mono text-cyan-300 font-semibold">ling55785@gmail.com</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-400">Auth Method:</span>
+              <span class="font-mono text-gray-300">OAuth Personal (Antigravity Suite)</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-400">Usage Telemetry:</span>
+              <span class="text-emerald-400">Active & Linked with DSH</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gemini API Key Link -->
+        <div>
+          <label class="block text-gray-300 mb-1 font-medium flex items-center justify-between">
+            <span>Gemini API Key (Google AI Studio)</span>
+            <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-cyan-400 hover:underline flex items-center space-x-1 text-[10px]">
+              <span>Get API Key</span>
+              <i data-lucide="external-link" class="w-2.5 h-2.5"></i>
+            </a>
+          </label>
+          <div class="flex space-x-2">
+            <input type="password" id="setting-gemini-key" placeholder="AIzaSy... (Leave empty to use local Antigravity OAuth)" class="flex-1 bg-[#0c1222] border border-white/10 rounded px-2.5 py-1.5 text-gray-200 font-mono text-xs focus:outline-none focus:border-cyan-400">
+            <button id="btn-test-gemini" type="button" class="px-3 py-1.5 rounded bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-500/40 text-cyan-300 text-xs font-semibold flex items-center space-x-1 transition">
+              <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+              <span>Test</span>
+            </button>
+          </div>
+          <p id="gemini-test-result" class="text-[10px] text-gray-400 mt-1 font-mono"></p>
+        </div>
+
+        <!-- Default Model -->
+        <div>
+          <label class="block text-gray-400 mb-1 font-medium">Default Model Selection</label>
+          <select id="setting-model" class="w-full bg-[#0c1222] border border-white/10 rounded px-2.5 py-1.5 text-gray-200 font-mono text-xs focus:outline-none focus:border-cyan-400">
+            <option value="Gemini 3.8 Flash (High)">✨ Gemini 3.8 Flash (High)</option>
+            <option value="Gemini 2.5 Flash">⚡ Gemini 2.5 Flash</option>
+            <option value="Gemini 2.5 Pro (Advanced)">🌟 Gemini 2.5 Pro (Advanced)</option>
+            <option value="Gemini 4 Argon (Medium)">🪐 Gemini 4 Argon (Medium)</option>
+            <option value="DeepSeek V3 (671B MoE)">🧠 DeepSeek V3 (671B MoE)</option>
+            <option value="DeepSeek R1 (Reasoning)">🔮 DeepSeek R1 (Reasoning)</option>
+            <option value="Custom Endpoint">🔌 Custom Endpoint (Ollama/vLLM)</option>
+          </select>
+        </div>
+
+        <!-- Workspace Directory -->
+        <div>
+          <label class="block text-gray-400 mb-1 font-medium">Workspace Directory</label>
+          <input type="text" id="setting-workspace" value="C:\Users\ling5" class="w-full bg-[#0c1222] border border-white/10 rounded px-2.5 py-1.5 text-gray-200 font-mono text-xs focus:outline-none focus:border-cyan-400">
+        </div>
+
+        <!-- Custom API Endpoint -->
+        <div>
+          <label class="block text-gray-400 mb-1 font-medium">Custom API Endpoint (Optional)</label>
+          <input type="text" id="setting-endpoint" placeholder="https://generativelanguage.googleapis.com or http://localhost:11434" class="w-full bg-[#0c1222] border border-white/10 rounded px-2.5 py-1.5 text-gray-200 font-mono text-xs focus:outline-none focus:border-cyan-400">
+        </div>
+      </div>
+
+      <div class="p-3 border-t border-white/10 bg-[#04060c] flex justify-end space-x-2">
+        <button onclick="window.app.closeModal('modal-settings')" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs">Cancel</button>
+        <button id="btn-save-settings" class="px-4 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold flex items-center space-x-1.5">
+          <i data-lucide="check" class="w-3.5 h-3.5"></i>
+          <span>Save Settings</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/js/services/api.js"></script>
+  <script src="/js/services/socket.js"></script>
+  <script src="/js/components/chat.js"></script>
+  <script src="/js/components/sidebar.js"></script>
+  <script src="/js/components/input.js"></script>
+  <script src="/js/components/terminal.js"></script>
+  <script src="/js/components/plugins.js"></script>
+  <script src="/js/components/memory.js"></script>
+  <script src="/js/components/graph.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

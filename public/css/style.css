@@ -1,0 +1,865 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+/* ==========================================================================
+   DEEPSEEK HARNESS // FLUID COCKPIT DESIGN SYSTEM
+   Synthesized from: emil-design-eng, apple-design, motion-design, frontend-design
+   ========================================================================== */
+
+:root {
+  /* Surface Layers (Deep Spatial Obsidian Hierarchy) */
+  --dsh-bg-void: #030509;
+  --dsh-bg-root: #050813;
+  --dsh-bg-base: #070c1a;
+  --dsh-bg-surface: rgba(10, 16, 32, 0.72);
+  --dsh-bg-card: rgba(13, 22, 44, 0.65);
+  --dsh-bg-card-hover: rgba(19, 32, 62, 0.85);
+  --dsh-bg-elevated: rgba(22, 36, 70, 0.85);
+  
+  /* Luminous Accent Hierarchy */
+  --dsh-cyan: #00f0ff;
+  --dsh-cyan-glow: rgba(0, 240, 255, 0.35);
+  --dsh-blue: #2563eb;
+  --dsh-purple: #a855f7;
+  --dsh-purple-glow: rgba(168, 85, 247, 0.35);
+  --dsh-emerald: #10b981;
+  --dsh-emerald-glow: rgba(16, 185, 129, 0.35);
+  --dsh-amber: #f59e0b;
+  --dsh-rose: #f43f5e;
+  
+  /* Specular Borders */
+  --dsh-border-subtle: rgba(255, 255, 255, 0.08);
+  --dsh-border-light: rgba(255, 255, 255, 0.14);
+  --dsh-border-cyan: rgba(0, 240, 255, 0.3);
+  --dsh-border-purple: rgba(168, 85, 247, 0.3);
+  
+  /* Text & Readability */
+  --dsh-text-primary: #f8fafc;
+  --dsh-text-secondary: #94a3b8;
+  --dsh-text-muted: #64748b;
+  
+  /* Spring & Easing Physics (Emil Kowalski + Apple WWDC) */
+  --dsh-ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --dsh-ease-snappy: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dsh-ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Spatial Depth & Shadows */
+  --dsh-shadow-glass: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 12px 36px -8px rgba(0, 0, 0, 0.65);
+  --dsh-shadow-glow-cyan: 0 0 30px rgba(0, 240, 255, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  --dsh-shadow-glow-purple: 0 0 30px rgba(168, 85, 247, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  --dsh-shadow-card-hover: 0 14px 40px -10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 240, 255, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--dsh-bg-void);
+  color: var(--dsh-text-primary);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-feature-settings: "tnum";
+}
+
+/* ==========================================================================
+   AMBIENT LIVING LIGHTING & BACKGROUNDS (Never Flat!)
+   ========================================================================== */
+
+/* Ambient Floating Aurora Mesh (Adds vital living atmosphere) */
+.ambient-aurora-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.18;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+
+.ambient-orb-1 {
+  width: 550px;
+  height: 550px;
+  top: -120px;
+  left: 15%;
+  background: radial-gradient(circle, #00f0ff 0%, #0066ff 70%, transparent 100%);
+  animation: floatAurora1 18s ease-in-out infinite alternate;
+}
+
+.ambient-orb-2 {
+  width: 600px;
+  height: 600px;
+  bottom: -150px;
+  right: 10%;
+  background: radial-gradient(circle, #a855f7 0%, #6366f1 70%, transparent 100%);
+  animation: floatAurora2 22s ease-in-out infinite alternate;
+}
+
+.ambient-orb-3 {
+  width: 400px;
+  height: 400px;
+  top: 40%;
+  right: 35%;
+  background: radial-gradient(circle, #10b981 0%, #0ea5e9 70%, transparent 100%);
+  animation: floatAurora3 26s ease-in-out infinite alternate;
+  opacity: 0.10;
+}
+
+@keyframes floatAurora1 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(60px, 40px) scale(1.12); }
+  100% { transform: translate(-30px, 70px) scale(0.95); }
+}
+
+@keyframes floatAurora2 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-80px, -50px) scale(1.15); }
+  100% { transform: translate(40px, -80px) scale(0.92); }
+}
+
+@keyframes floatAurora3 {
+  0% { transform: translate(0, 0) scale(0.9); }
+  100% { transform: translate(50px, -40px) scale(1.2); }
+}
+
+/* Subtle High-Tech Blueprint Canvas */
+.dsh-blueprint-bg {
+  background-color: var(--dsh-bg-void);
+  background-image:
+    radial-gradient(rgba(0, 240, 255, 0.08) 1.2px, transparent 1.2px),
+    linear-gradient(to right, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 28px 28px, 140px 140px, 140px 140px;
+}
+
+/* ==========================================================================
+   GLASSMORPHIC SURFACES & DEPTH (Apple Fluid Translucency)
+   ========================================================================== */
+
+.glass-cockpit {
+  background: rgba(6, 10, 22, 0.82);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--dsh-border-light);
+  box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.glass-sidebar {
+  background: rgba(5, 9, 20, 0.88);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border-color: var(--dsh-border-subtle);
+  box-shadow: 4px 0 24px -2px rgba(0, 0, 0, 0.5);
+}
+
+.glass-drawer {
+  background: rgba(6, 11, 24, 0.90);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-color: var(--dsh-border-subtle);
+  box-shadow: -6px 0 30px rgba(0, 0, 0, 0.6);
+}
+
+.glass-card {
+  background: var(--dsh-bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--dsh-border-subtle);
+  border-radius: 12px;
+  box-shadow: var(--dsh-shadow-glass);
+}
+
+/* Interactive Card with Smooth Lift & Glow on Hover */
+.glass-card-interactive {
+  background: var(--dsh-bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--dsh-border-subtle);
+  border-radius: 14px;
+  box-shadow: var(--dsh-shadow-glass);
+  transition: transform 220ms var(--dsh-ease-spring),
+              border-color 200ms ease,
+              background-color 200ms ease,
+              box-shadow 220ms ease;
+  will-change: transform;
+}
+
+.glass-card-interactive:hover {
+  transform: translateY(-2.5px);
+  background-color: var(--dsh-bg-card-hover);
+  border-color: rgba(0, 240, 255, 0.35);
+  box-shadow: var(--dsh-shadow-card-hover);
+}
+
+.glass-card-interactive:active {
+  transform: translateY(-0.5px) scale(0.985);
+  transition-duration: 80ms;
+}
+
+/* ==========================================================================
+   MICRO-INTERACTION PHYSICS & BUTTONS (Emil Kowalski Standard)
+   ========================================================================== */
+
+/* Universal tactile button press */
+button, .btn-action, .clickable-pill {
+  transition: transform 140ms var(--dsh-ease-spring),
+              background-color 160ms ease,
+              border-color 160ms ease,
+              box-shadow 160ms ease,
+              opacity 160ms ease;
+  user-select: none;
+}
+
+button:active:not(:disabled), .btn-action:active, .clickable-pill:active {
+  transform: scale(0.965);
+}
+
+/* Primary Cyan Action Button with Neon Edge */
+.btn-primary-neon {
+  background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
+  color: #ffffff;
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  box-shadow: 0 4px 14px rgba(0, 180, 216, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary-neon:hover {
+  background: linear-gradient(135deg, #00f0ff 0%, #0096c7 100%);
+  border-color: rgba(0, 240, 255, 0.7);
+  box-shadow: 0 6px 20px rgba(0, 240, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-primary-neon:active {
+  transform: scale(0.96);
+  box-shadow: 0 2px 8px rgba(0, 240, 255, 0.3);
+}
+
+/* Shimmer Animation across hero elements */
+.shimmer-sweep {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-sweep::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 80%
+  );
+  transform: rotate(25deg);
+  animation: shimmerAnim 6s infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmerAnim {
+  0% { transform: translateX(-100%) rotate(25deg); }
+  25%, 100% { transform: translateX(100%) rotate(25deg); }
+}
+
+/* Holographic Emblem Glow */
+.dsh-emblem-glow {
+  background: linear-gradient(135deg, #0066ff 0%, #00f0ff 50%, #8b5cf6 100%);
+  position: relative;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
+}
+
+.dsh-emblem-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #00f0ff, transparent 40%, #8b5cf6);
+  z-index: -1;
+  opacity: 0.8;
+  animation: emblemPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes emblemPulse {
+  0% { opacity: 0.5; filter: blur(3px); }
+  100% { opacity: 1; filter: blur(6px); }
+}
+
+/* ==========================================================================
+   TABS & NAVIGATION (Fluid Active Pill Indicator)
+   ========================================================================== */
+
+.sidebar-tab {
+  position: relative;
+  transition: color 180ms ease, background-color 180ms ease;
+  border-radius: 8px;
+}
+
+.sidebar-tab.active {
+  background: rgba(0, 240, 255, 0.12) !important;
+  color: #00f0ff !important;
+  border: 1px solid rgba(0, 240, 255, 0.32) !important;
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-tab:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.04);
+  color: #e2e8f0;
+}
+
+.drawer-tab {
+  position: relative;
+  transition: color 180ms ease, background-color 180ms ease;
+  border-radius: 8px;
+}
+
+.drawer-tab.active {
+  background: rgba(0, 240, 255, 0.12) !important;
+  color: #00f0ff !important;
+  border: 1px solid rgba(0, 240, 255, 0.3) !important;
+  box-shadow: 0 0 14px rgba(0, 240, 255, 0.12);
+}
+
+/* ==========================================================================
+   CHAT MESSAGES & STREAMING (Fluid Choreography)
+   ========================================================================== */
+
+/* Entrance Animation for new turns and messages */
+.chat-entry-anim {
+  animation: slideUpFade 240ms var(--dsh-ease-spring) forwards;
+}
+
+@keyframes slideUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* User Message Bubble */
+.user-msg-bubble {
+  background: linear-gradient(135deg, rgba(19, 30, 58, 0.85) 0%, rgba(13, 20, 40, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: border-color 200ms ease;
+}
+
+.user-msg-bubble:hover {
+  border-color: rgba(0, 240, 255, 0.35);
+}
+
+/* Assistant Message Bubble */
+.assistant-msg-bubble {
+  background: rgba(8, 14, 28, 0.75);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Trajectory / Thinking Process Card */
+.thought-block {
+  background: rgba(12, 16, 30, 0.7);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  border-left: 3px solid #a855f7;
+  border-radius: 10px;
+  transition: border-color 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
+  overflow: hidden;
+}
+
+.thought-block:hover {
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow: 0 4px 18px rgba(168, 85, 247, 0.12);
+}
+
+.thought-block.expanded {
+  background: rgba(12, 16, 32, 0.95);
+  border-color: rgba(0, 240, 255, 0.45);
+  border-left-color: #00f0ff;
+  box-shadow: 0 8px 28px rgba(0, 240, 255, 0.12);
+}
+
+/* DeepSeek Tool Execution Card */
+.tool-card {
+  background: rgba(9, 15, 30, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 240, 255, 0.22);
+  border-radius: 12px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 6px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 180ms var(--dsh-ease-spring),
+              border-color 180ms ease,
+              box-shadow 180ms ease;
+}
+
+.tool-card:hover {
+  transform: translateY(-1.5px);
+  border-color: rgba(0, 240, 255, 0.5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 10px 28px rgba(0, 240, 255, 0.15);
+}
+
+/* Tool execution status tags */
+.status-badge-running {
+  background: rgba(0, 240, 255, 0.15);
+  color: #00f0ff;
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+}
+
+.status-badge-success {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+}
+
+.status-badge-error {
+  background: rgba(244, 63, 94, 0.15);
+  color: #f43f5e;
+  border: 1px solid rgba(244, 63, 94, 0.4);
+  box-shadow: 0 0 10px rgba(244, 63, 94, 0.2);
+}
+
+/* ==========================================================================
+   MARKDOWN PROSE STYLING & CODE COPY BAR
+   ========================================================================== */
+
+.prose-dark {
+  color: #e2e8f0;
+  line-height: 1.75;
+}
+
+.prose-dark h1, .prose-dark h2, .prose-dark h3, .prose-dark h4 {
+  color: #f8fafc;
+  font-weight: 700;
+  margin-top: 1.4em;
+  margin-bottom: 0.5em;
+  letter-spacing: -0.02em;
+}
+
+.prose-dark h1 { font-size: 1.35rem; }
+.prose-dark h2 { font-size: 1.18rem; color: #38bdf8; }
+.prose-dark h3 { font-size: 1.05rem; }
+
+.prose-dark p {
+  margin-top: 0.6em;
+  margin-bottom: 0.6em;
+}
+
+.prose-dark ul, .prose-dark ol {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding-left: 1.4em;
+}
+
+.prose-dark li {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+
+/* High-Tech Code Block Container */
+.code-block-wrapper {
+  position: relative;
+  margin: 1rem 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #030611;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.8), 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 14px;
+  background: rgba(13, 20, 38, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.btn-copy-code {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.btn-copy-code:hover {
+  background: rgba(0, 240, 255, 0.15);
+  border-color: rgba(0, 240, 255, 0.4);
+  color: #00f0ff;
+}
+
+.prose-dark pre {
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 14px 16px !important;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.prose-dark code:not(pre code) {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.88em;
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  padding: 2px 6px;
+  border-radius: 6px;
+  color: #38bdf8;
+}
+
+.prose-dark blockquote {
+  border-left: 3px solid #00f0ff;
+  padding: 8px 14px;
+  margin: 1em 0;
+  color: #cbd5e1;
+  background: linear-gradient(90deg, rgba(0, 240, 255, 0.08) 0%, transparent 100%);
+  border-radius: 0 8px 8px 0;
+}
+
+.prose-dark a {
+  color: #38bdf8;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(56, 189, 248, 0.5);
+  transition: all 150ms ease;
+}
+
+.prose-dark a:hover {
+  color: #00f0ff;
+  border-bottom-style: solid;
+  border-color: #00f0ff;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+}
+
+/* ==========================================================================
+   COMPOSER INPUT COCKPIT (Apple Command Center)
+   ========================================================================== */
+
+.composer-frame {
+  background: rgba(10, 16, 32, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  box-shadow: 0 12px 36px -6px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition: border-color 220ms var(--dsh-ease-spring),
+              box-shadow 220ms var(--dsh-ease-spring),
+              background-color 200ms ease;
+}
+
+.composer-frame:focus-within {
+  background: rgba(12, 20, 42, 0.95);
+  border-color: rgba(0, 240, 255, 0.6);
+  box-shadow: 0 0 35px rgba(0, 240, 255, 0.22),
+              0 14px 44px rgba(0, 0, 0, 0.8),
+              inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* Prompt Suggestion Chips floating above composer */
+.prompt-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: rgba(13, 22, 44, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 180ms var(--dsh-ease-spring);
+  white-space: nowrap;
+}
+
+.prompt-chip:hover {
+  transform: translateY(-2px);
+  background: rgba(0, 240, 255, 0.12);
+  border-color: rgba(0, 240, 255, 0.4);
+  color: #00f0ff;
+  box-shadow: 0 4px 14px rgba(0, 240, 255, 0.2);
+}
+
+.prompt-chip:active {
+  transform: scale(0.95);
+}
+
+/* Autocomplete Menu */
+.autocomplete-menu {
+  background: rgba(10, 16, 32, 0.95);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 240, 255, 0.15);
+  border-radius: 14px;
+}
+
+.autocomplete-item {
+  transition: background-color 140ms ease, color 140ms ease;
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+.autocomplete-item.selected, .autocomplete-item:hover {
+  background: rgba(0, 240, 255, 0.16);
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   STATUS INDICATORS & TELEMETRY GAUGES
+   ========================================================================== */
+
+.pulse-live {
+  position: relative;
+}
+
+.pulse-live::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin-top: -4px;
+  margin-left: -4px;
+  border-radius: 50%;
+  background: #10b981;
+  animation: pulseRing 1.8s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+}
+
+@keyframes pulseRing {
+  0% { transform: scale(0.9); opacity: 1; }
+  100% { transform: scale(3.2); opacity: 0; }
+}
+
+.telemetry-pill {
+  background: rgba(11, 18, 36, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.telemetry-pill:hover {
+  border-color: rgba(0, 240, 255, 0.4);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.15);
+}
+
+/* ==========================================================================
+   TOAST NOTIFICATION ENGINE
+   ========================================================================== */
+
+#toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.toast-msg {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: rgba(10, 16, 32, 0.92);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--dsh-border-light);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  font-size: 12px;
+  color: #f8fafc;
+  animation: toastEnter 220ms var(--dsh-ease-spring) forwards;
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+
+.toast-msg.toast-leaving {
+  opacity: 0;
+  transform: translateX(30px) scale(0.95);
+}
+
+@keyframes toastEnter {
+  0% { opacity: 0; transform: translateY(-10px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ==========================================================================
+   SCROLLBAR & TERMINAL
+   ========================================================================== */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 4px;
+  transition: background 150ms ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.45);
+}
+
+.terminal-window {
+  background-color: #03050c;
+  color: #38bdf8;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   LIVING CELLULAR EMPTY STATE & TACTILE WORKFLOWS
+   ========================================================================== */
+
+/* Concentric Orbital Emblem Animation */
+.orbital-emblem {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #0284c7 0%, #00f0ff 50%, #9333ea 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.orbital-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 24px;
+  border: 1px dashed rgba(0, 240, 255, 0.4);
+  animation: orbitalSpin 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes orbitalSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Living Project Cell Chip */
+.cell-chip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: rgba(10, 16, 32, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  cursor: pointer;
+  transition: transform 140ms var(--dsh-ease-spring),
+              background-color 160ms ease,
+              border-color 160ms ease,
+              box-shadow 160ms ease;
+}
+
+.cell-chip-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(18, 28, 54, 0.9);
+  border-color: rgba(0, 240, 255, 0.5);
+  box-shadow: 0 4px 16px rgba(0, 240, 255, 0.25);
+  color: #ffffff;
+}
+
+.cell-chip-btn:active {
+  transform: scale(0.96);
+}
+
+/* Fluid Workflow Starter Card */
+.workflow-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(12, 20, 40, 0.65);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  text-align: left;
+  transition: transform 160ms var(--dsh-ease-spring),
+              border-color 160ms ease,
+              background-color 160ms ease,
+              box-shadow 180ms ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.workflow-card:hover {
+  transform: translateY(-2.5px);
+  background: rgba(18, 30, 60, 0.85);
+  border-color: rgba(0, 240, 255, 0.4);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.7), 0 0 16px rgba(0, 240, 255, 0.18);
+}
+
+.workflow-card:active {
+  transform: scale(0.975);
+}
+
+/* Subtle pulse badge */
+.pulse-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+}
+

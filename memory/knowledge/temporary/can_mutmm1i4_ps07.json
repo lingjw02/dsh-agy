@@ -1,0 +1,27 @@
+{
+  "id": "can_mutmm1i4_ps07",
+  "content": "Project uses pnpm for fast package management",
+  "type": "learned",
+  "category": "temporary",
+  "status": "candidate",
+  "confidence": 0.45,
+  "importance": 0.6,
+  "sources": [
+    "package.json"
+  ],
+  "evidence_count": 1,
+  "contradictions": 1,
+  "content_hash": "ade297c4b446d4c10c89b674fa626ccb463772c7ea252ce724b448a354de05b0",
+  "created_at": "2026-10-04T09:36:19.228Z",
+  "updated_at": "2026-10-04T09:36:19.228Z",
+  "valid_from": "2026-10-04T09:36:19.228Z",
+  "valid_until": null,
+  "last_verified": null,
+  "usage_count": 0,
+  "success_count": 0,
+  "failure_count": 0,
+  "superseded_by": null,
+  "supersedes": null,
+  "tags": [],
+  "relations": []
+}

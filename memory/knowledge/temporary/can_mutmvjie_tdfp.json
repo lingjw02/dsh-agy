@@ -1,0 +1,31 @@
+{
+  "id": "can_mutmvjie_tdfp",
+  "content": "When performing \"Install torch on Python 3.13 Windows environment\", error occurred: \"ERROR: No matching distribution found for torch (Python 3.13 not supported in wheels yet)\". Pre-check parameters and environment to avoid recurrence.",
+  "type": "lesson_learned",
+  "category": "temporary",
+  "status": "candidate",
+  "confidence": 0.5,
+  "importance": 0.85,
+  "sources": [
+    "task_experience:task-install-torch-313"
+  ],
+  "evidence_count": 1,
+  "contradictions": 0,
+  "content_hash": "ebbf2d4a551d380c0b3e9c71114b8f382f27c22788c6c81e2d88d1ed2d6b8479",
+  "created_at": "2026-10-04T09:43:42.471Z",
+  "updated_at": "2026-10-04T09:43:42.471Z",
+  "valid_from": "2026-10-04T09:43:42.471Z",
+  "valid_until": null,
+  "last_verified": null,
+  "usage_count": 0,
+  "success_count": 0,
+  "failure_count": 0,
+  "superseded_by": null,
+  "supersedes": null,
+  "tags": [
+    "experience",
+    "lesson",
+    "run_command"
+  ],
+  "relations": []
+}

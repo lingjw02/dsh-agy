@@ -1,0 +1,33 @@
+{
+  "id": "kno_user_coding_style",
+  "content": "User prefers anti-slop, highly complete implementations with zero placeholder omissions or truncated snippets.",
+  "type": "user_preference",
+  "category": "user",
+  "status": "verified",
+  "confidence": 0.95,
+  "importance": 0.95,
+  "sources": [
+    "memory/USER.md"
+  ],
+  "evidence_count": 2,
+  "contradictions": 0,
+  "content_hash": "e7ef306e341f367fda958263d9acff944494add48c88e0a734a426d002480e35",
+  "created_at": "2026-10-04T09:35:42.145Z",
+  "updated_at": "2026-10-04T09:35:42.145Z",
+  "valid_from": "2026-10-04T09:35:42.145Z",
+  "valid_until": null,
+  "last_verified": "2026-10-04T09:35:42.145Z",
+  "usage_count": 0,
+  "success_count": 0,
+  "failure_count": 0,
+  "superseded_by": null,
+  "supersedes": null,
+  "tags": [
+    "anti-slop",
+    "code-integrity",
+    "user-preference"
+  ],
+  "relations": [
+    "[[anti-slop-ui-standard]]"
+  ]
+}

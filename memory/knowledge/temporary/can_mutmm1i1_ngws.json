@@ -1,0 +1,28 @@
+{
+  "id": "can_mutmm1i1_ngws",
+  "content": "DeepSeek Harness uses Cordis kernel",
+  "type": "learned",
+  "category": "temporary",
+  "status": "candidate",
+  "confidence": 0.45,
+  "importance": 0.6,
+  "sources": [
+    "doc1",
+    "doc2"
+  ],
+  "evidence_count": 2,
+  "contradictions": 1,
+  "content_hash": "0c550199ddd2a3fc13d6cebc7fd96faa4ac2b6ef9eb082d23a5d25346ce6a141",
+  "created_at": "2026-10-04T09:36:19.225Z",
+  "updated_at": "2026-10-04T09:36:19.226Z",
+  "valid_from": "2026-10-04T09:36:19.225Z",
+  "valid_until": null,
+  "last_verified": null,
+  "usage_count": 0,
+  "success_count": 0,
+  "failure_count": 0,
+  "superseded_by": null,
+  "supersedes": null,
+  "tags": [],
+  "relations": []
+}

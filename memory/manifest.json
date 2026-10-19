@@ -1,0 +1,45 @@
+{
+  "name": "Antigravity Hermes Memory Bank",
+  "version": "2.0.0",
+  "architecture": "Hermes AI Tier-1 Persistent Markdown",
+  "lastUpdated": "2026-10-04T06:57:48.773Z",
+  "directory": "D:\\02_Development_Tools\\Antigravity harness\\memory",
+  "files": [
+    {
+      "filename": "MEMORY.md",
+      "path": "D:\\02_Development_Tools\\Antigravity harness\\memory\\MEMORY.md",
+      "charCount": 1475,
+      "budget": 2500,
+      "usagePercent": 59,
+      "isOverBudget": false,
+      "lastModified": "2026-10-04T06:57:48.766Z"
+    },
+    {
+      "filename": "USER.md",
+      "path": "D:\\02_Development_Tools\\Antigravity harness\\memory\\USER.md",
+      "charCount": 768,
+      "budget": 1500,
+      "usagePercent": 51,
+      "isOverBudget": false,
+      "lastModified": "2026-10-04T06:57:48.767Z"
+    },
+    {
+      "filename": "activeContext.md",
+      "path": "D:\\02_Development_Tools\\Antigravity harness\\memory\\activeContext.md",
+      "charCount": 762,
+      "budget": 3000,
+      "usagePercent": 25,
+      "isOverBudget": false,
+      "lastModified": "2026-10-04T06:57:48.767Z"
+    },
+    {
+      "filename": "decisions.md",
+      "path": "D:\\02_Development_Tools\\Antigravity harness\\memory\\decisions.md",
+      "charCount": 752,
+      "budget": 5000,
+      "usagePercent": 15,
+      "isOverBudget": false,
+      "lastModified": "2026-10-04T06:57:48.768Z"
+    }
+  ]
+}
