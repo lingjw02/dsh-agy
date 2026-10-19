@@ -24,3 +24,7 @@ pnpm-debug.log*
 # OS files
 .DS_Store
 Thumbs.db
+
+# Temporary UI artifacts
+ui-design-runs/
+style.json
