@@ -245,18 +245,26 @@ app.get('/api/quota/metrics', (req, res) => {
 });
 
 app.get('/api/account/status', (req, res) => {
-  const acc = agentEngine.googleAccount;
+  const acc = agentEngine.geminiBridge.tracker.getMetrics().googleAccount;
   const metrics = agentEngine.geminiBridge.tracker.getMetrics();
   res.json({
     email: acc.email,
+    projectId: acc.projectId,
     authType: acc.authType,
     connected: acc.connected,
+    quotaWindows: acc.quotaWindows,
     service: acc.service,
     status: acc.status,
     activeModel: agentEngine.config.model,
+    modelsTracked: metrics.modelsTracked,
+    modelsUsage: metrics.modelsUsage,
     hasApiKey: Boolean(agentEngine.geminiBridge.apiKey || process.env.GEMINI_API_KEY),
     geminiKey: agentEngine.geminiBridge.apiKey ? (agentEngine.geminiBridge.apiKey.slice(0, 4) + '...' + agentEngine.geminiBridge.apiKey.slice(-4)) : '',
     totalTokens: metrics.totalTokens,
+    promptTokens: metrics.promptTokens,
+    completionTokens: metrics.completionTokens,
+    cacheReadTokens: metrics.cacheReadTokens,
+    requestCount: metrics.requestCount,
     estimatedCostUsd: metrics.estimatedCostUsd,
     averageLatencyMs: metrics.averageLatencyMs,
     harness: 'Antigravity Harness (AGH) - DeepSeek Slot Architecture'

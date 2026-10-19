@@ -161,6 +161,30 @@ class TerminalComponent {
         if (elAccountAuth) elAccountAuth.textContent = data.googleAccount.authType || 'OAuth Personal';
         const topAccountEmail = document.getElementById('account-email');
         if (topAccountEmail) topAccountEmail.textContent = data.googleAccount.email;
+
+        const elWindowsList = document.getElementById('drawer-quota-windows-list');
+        if (elWindowsList && Array.isArray(data.googleAccount.quotaWindows) && data.googleAccount.quotaWindows.length > 0) {
+          elWindowsList.innerHTML = data.googleAccount.quotaWindows.map(w => {
+            const pct = Math.round((w.remainingFraction !== undefined ? w.remainingFraction : 1) * 100);
+            const color = pct >= 50 ? 'text-emerald-400' : (pct >= 20 ? 'text-amber-400' : 'text-red-400');
+            return `
+              <div class="flex justify-between items-center text-gray-300">
+                <span>${w.group} (${w.window}):</span>
+                <span class="${color} font-bold">${pct}%</span>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+
+      const elTrackedList = document.getElementById('tracked-models-list');
+      if (elTrackedList && Array.isArray(data.modelsTracked) && data.modelsTracked.length > 0) {
+        elTrackedList.innerHTML = data.modelsTracked.map(m => {
+          const isGemini = m.toLowerCase().includes('gemini');
+          const isClaude = m.toLowerCase().includes('claude');
+          const color = isGemini ? 'text-cyan-300' : (isClaude ? 'text-purple-300' : 'text-emerald-300');
+          return `<div class="text-[11px] ${color}">• ${m}</div>`;
+        }).join('');
       }
 
       if (data.rateLimits) {
